@@ -66,11 +66,69 @@ def bot_choix_nombremystere(intervalle : int) -> int :
     nombremystere = randint(1, intervalle)
 
     return nombremystere
-############################################################
 
+def bot_devinnette(difficulte : int, intervalle : int, retour_jeu : int, nbr_prec : int) -> int:
+    """
+    Fonction pour le bot pour la devinette.
+    Args:
+        intervalle (int): L'intervalle de jeu.
+    Returns:
+        int: Le nombre mystère.
+    """
+    back_game : int
 
+    #Mode hasard
+    if difficulte == 0 :
+        back_game = randint(1, intervalle)
+        print(back_game)
+        return back_game
 
-
+    #Mode entre-deux
+    elif difficulte == 1 :
+        if retour_jeu == -1 :
+            back_game = randint(1, intervalle)
+            print(back_game)
+            return back_game
+        elif retour_jeu == 0 :
+            back_game = randint(nbr_prec, intervalle)
+            print(back_game)
+            return back_game
+        else :
+            back_game = randint(1, nbr_prec)
+            print(back_game)
+            return back_game
+        
+    #Mode dichotomie/complexe
+    else :
+        if retour_jeu == -1 :
+            back_game = intervalle // 2
+            print(back_game)
+            return back_game
+        elif retour_jeu == 0 :
+            back_game = (nbr_prec // 2) + nbr_prec
+            print(back_game)
+            return back_game
+        else :
+            back_game = nbr_prec // 2
+            print(back_game)
+            return back_game
+        
+def bot_reponse_intervalle_devinette(nbr_devine : int, nbr_reponse : int) -> int:
+    """
+    Fonction pour la réponse du bot pour la devinette.
+    Args:
+        nbr_devine (int): Le nombre deviné.
+        nbr_reponse (int): Le nombre mystère.
+    Returns:
+        int: La réponse du bot.
+    """
+    if nbr_devine < nbr_reponse :
+        return 0
+    elif nbr_devine > nbr_reponse :
+        return 1
+    else :
+        return 2
+    
 ############################################################
 ############################################################
 ############################################################
@@ -179,17 +237,16 @@ def devinette():
 ############################################################
 
     #Début de la boucle de jeu
-    while gagner==False:
-        si_IA = siIA(listej)
+    si_IA = siIA(listej)
 
 ######################################
-        #Mode Joueur contre Joueur
-        if si_IA == 0 or (si_IA == 1 and joueur1 != "IA1") :
-            intervalle = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, Choisissez l'intervalle de jeu entre 1 et n : ", int, "La valeur doit être un entier", 1, 100))
-            nbrmystere = saisie_nombremystere(intervalle, joueur1)
+    #Mode Joueur contre Joueur
+    if si_IA == 0 :
+        intervalle = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, Choisissez l'intervalle de jeu entre 1 et n : ", int, "La valeur doit être un entier", 1, 100))
+        nbrmystere = saisie_nombremystere(intervalle, joueur1)
+        while not gagner :
             print("\033[F\033[K", end="") #Efface la ligne précédente pour ne pas afficher le nombre mystère
             print(f"\033[0;36m{joueur1}\033[0m a choisi le nombre à deviner c'est à \033[0;36m{joueur2}\033[0m de jouer ! \n") 
-
             sleep(3)
             effacer_console()
             # Le joueur 2 fait une supposition
@@ -197,22 +254,18 @@ def devinette():
             menu("devinette")
             valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
             print("\033[F\033[K", end="")
-
             # Le joueur 1 répond
             if valeur == 2 and nbrdevine != nbrmystere :
                 print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
                 while valeur == 2 and nbrdevine != nbrmystere :
                     valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
-
             if valeur == 0:
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
             if valeur == 1:
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
-
             # Si le nombre n'a pas été trouvé en compteur_max tours
             if Sicompteur == "Oui" :
                 compteur += 1
-
             if compteur == compteur_max :
                 effacer_console()
                 print(f"Le nombre à deviner était {nbrmystere} !")
@@ -220,7 +273,41 @@ def devinette():
                 print(f"Bravo à {joueur1} pour avoir caché le nombre !\n")
                 gagner = True
                 enregistrer_score_binaire("devinette", joueur1, 1)
-
+            # Si le joueur 2 trouve le bon nombre
+            if valeur == 2 and nbrdevine == nbrmystere :
+                effacer_console()
+                print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
+                gagner = True
+                enregistrer_score_binaire("devinette", joueur2, 1)
+#####################################
+    #Mode Joueur contre IA
+    #IA choisi le nombre mystère
+    elif si_IA == 1 and joueur1 == "IA1" :
+        intervalle = bot_choix_intervalle(difficulte)
+        nbrmystere = bot_choix_nombremystere(intervalle)
+        while not gagner :
+            print(f"\033[0;36m{joueur1}\033[0m a choisi le nombre à deviner c'est à \033[0;36m{joueur2}\033[0m de jouer ! \n")
+            sleep(3)
+            effacer_console()
+            # Le joueur 2 fait une supposition
+            print(f"L'intervalle de jeu est de 1 à {intervalle}")
+            print(f"TEMPORAIRE : Le nombre mystère est {nbrmystere}")
+            nbrdevine = int(inputCustom(f"\033[0;36m{joueur2}\033[0m, quel est le nombre ? ", int, "La valeur doit être un entier", 1, intervalle))
+            menu("devinette")
+            valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
+            if valeur == 0:
+                print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+            if valeur == 1:
+                print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
+            # Si le nombre n'a pas été trouvé en compteur_max tours
+            if Sicompteur == "Oui" :
+                compteur += 1
+            if compteur == compteur_max :
+                effacer_console()
+                print(f"Le nombre à deviner était {nbrmystere} !")
+                print(f"Le nombre n'a pas été trouvé en {compteur_max} tours !")
+                print(f"Bravo à {joueur1} pour avoir caché le nombre !\n")
+                print(f"Pas de score pour l'IA")
             # Si le joueur 2 trouve le bon nombre
             if valeur == 2 and nbrdevine == nbrmystere :
                 effacer_console()
@@ -228,27 +315,61 @@ def devinette():
                 gagner = True
                 enregistrer_score_binaire("devinette", joueur2, 1)
 
-######################################
-        #Mode Joueur contre IA
-        elif si_IA == 1 and joueur1 == "IA1" :
-            intervalle = bot_choix_intervalle(difficulte)
-            nbrmystere = bot_choix_nombremystere(intervalle)
-
-        elif si_IA == 1 and joueur2 == "IA1" :
+    #IA devine le nombre mystère
+    elif si_IA == 1 and joueur2 == "IA1" :
             intervalle = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, Choisissez l'intervalle de jeu entre 1 et n : ", int, "La valeur doit être un entier", 1, 100))
-            nbrmystere = saisie_nombremystere(intervalle, joueur1)         
+            nbrmystere = saisie_nombremystere(intervalle, joueur1)
 
-######################################
-        #Mode IA contre IA
-        elif si_IA == 2 :
-            intervalle = bot_choix_intervalle(difficulte)
-            nbrmystere = bot_choix_nombremystere(intervalle)
+            valeur = -1
+            nbrdevine = -1
 
-        #Mode par défaut en cas de problème
-        else :
-            intervalle = 100
-            nbrmystere = 1
-            print("Si on est rentré ici c'est qu'il y a un problème ")
+            while not gagner :  
+                print(f"\033[0;36m{joueur1}\033[0m a choisi le nombre à deviner c'est à \033[0;36m{joueur2}\033[0m de jouer ! \n")
+                sleep(3)
+                effacer_console()
+
+                # Le joueur 2 fait une supposition
+                nbrdevine = bot_devinnette(difficulte, intervalle, valeur, nbrdevine)
+                menu("devinette")
+                valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+
+                # Le joueur 1 répond
+                if valeur == 2 and nbrdevine != nbrmystere :
+                    print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
+                    while valeur == 2 and nbrdevine != nbrmystere :
+                        valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+                if valeur == 0:
+                    print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+                if valeur == 1:
+                    print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
+
+                # Si le nombre n'a pas été trouvé en compteur_max tours
+                if Sicompteur == "Oui" :
+                    compteur += 1
+                if compteur == compteur_max :
+                    effacer_console()
+                    print(f"Le nombre à deviner était {nbrmystere} !")
+                    print(f"Le nombre n'a pas été trouvé en {compteur_max} tours !")
+                    print(f"Bravo à {joueur1} pour avoir caché le nombre !\n")
+                    gagner = True
+                    enregistrer_score_binaire("devinette", joueur1, 1)
+                    
+                # Si le joueur 2 trouve le bon nombre
+                if valeur == 2 and nbrdevine == nbrmystere :
+                    effacer_console()
+                    print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
+                    gagner = True
+                    print("Pas de score pour l'IA")
+#####################################
+    #Mode IA contre IA
+    elif si_IA == 2 :
+        intervalle = bot_choix_intervalle(difficulte)
+        nbrmystere = bot_choix_nombremystere(intervalle)
+    #Mode par défaut en cas de problème
+    else :
+        intervalle = 100
+        nbrmystere = 1
+        print("Si on est rentré ici c'est qu'il y a un problème ")
 
     afficher_scores_final("devinette")
     quitterjeux("devinette")
