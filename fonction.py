@@ -268,12 +268,11 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
     joueurs: List[str] 
     joueurs = []
 
-    print("\033[33mVous devez d'abord rentrer les noms des joueurs : \033[0m")
-    print("Saisissez le nom des deux joueurs : ")
-
     # Collecter les noms des joueurs
     # Mode de jeu Joueur contre Joueur
     if mode_jeu == 0 :
+        print("\033[33mVous devez d'abord rentrer les noms des joueurs : \033[0m")
+        print("Saisissez le nom des deux joueurs : ")
         while compteur < 2:
             nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
 
@@ -294,7 +293,9 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
         return joueurs  # Retourner directement la liste des joueurs
     
     # Mode de jeu Joueur contre IA
-    if mode_jeu == 1 :
+    elif mode_jeu == 1 :
+        print("\033[33mVous devez d'abord rentrer le nom du joueur : \033[0m")
+        print("Saisissez le nom du joueur : ")
         while compteur < 1:
             nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
 
@@ -316,13 +317,14 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
         return joueurs  # Retourner directement la liste des joueurs
     
     # Mode de jeu IA contre IA
-    if mode_jeu == 2 :
+    elif mode_jeu == 2 :
+        print("Pas besoin de rentrer de nom pour les IA.")
         print("Mode de jeu IA contre IA")
         joueurs = ["IA1", "IA2"]
-
         return joueurs
     
-    return joueurs
+    else : 
+        return joueurs
 
 ########################################################
 ########################################################
@@ -581,13 +583,13 @@ def choix_difficulte() -> int:
         int: Niveau de difficulté choisi
     """
     liste_difficultes : List[str]
-    liste_difficultes = ["Hasard", "Entre-deux", "Complexe"]
+    liste_difficultes = ["Hasard", "Entre-deux", "EN DEV"]
     difficulte : int
     difficulte = 0 
 
     print("\033[33mChoisissez le niveau de difficulté de l'IA : \033[0m")
     switch(liste_difficultes)
-    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 0, 2))
+    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 0, 1))
 
     return difficulte
 
