@@ -147,6 +147,7 @@ def devinette():
     Retourne : None
     """
 
+    #Initialisation des variables
     intervalle: int
     nbrmystere: int
     j: int
@@ -473,4 +474,6 @@ def devinette():
 
     #Affichage des scores
     afficher_scores_final("devinette")
+
+    #Proposition de quitter le jeu
     quitterjeux("devinette")
