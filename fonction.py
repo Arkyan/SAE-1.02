@@ -614,7 +614,7 @@ def choix_mode_jeu() -> int:
 
 ##################
 
-def si_IA(listejoueur : List[str]) -> int :
+def siIA(listejoueur : List[str]) -> int :
     """
     Fonction pour savoir si l'IA joue 
     Args:
@@ -622,12 +622,16 @@ def si_IA(listejoueur : List[str]) -> int :
     Returns:
         None : None
     """
+    ia : int
+    ia = 0
+
     for i in range(len(listejoueur)) :
-        if listejoueur[i] == "IA1" or listejoueur[i] == "IA2" :
-            return 1
-        else :
-            return 0
-    return 0
+        i = i 
+        if listejoueur[1] == "IA1" :
+            ia = 1
+        if listejoueur[1] == "IA2" :
+            ia = 2
+    return ia
 
 ##################################################################################################################
 ##################################################################################################################
