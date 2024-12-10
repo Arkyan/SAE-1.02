@@ -589,7 +589,7 @@ def choix_difficulte() -> int:
 
     print("\033[33mChoisissez le niveau de difficulté de l'IA : \033[0m")
     switch(liste_difficultes)
-    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 0, 1))
+    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 0, 2))
 
     return difficulte
 
