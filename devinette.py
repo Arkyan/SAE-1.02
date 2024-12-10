@@ -45,6 +45,10 @@ def devinette():
     joueur2: str
     listej: list[str]
     gagner: bool
+
+    mode_jeu : int 
+    difficulte : int
+
     gagner = False
     Sicompteur : str
     compteur : int
@@ -55,30 +59,56 @@ def devinette():
     #Proposition réinitialisation des scores
     reinitialiser_scores_binaire("devinette")
 
-    # Liste des joueurs
-    listej = listejoueur("devinette")
+    mode_jeu = choix_mode_jeu()
+    difficulte = choix_difficulte()
+    # Assigner les joueurs aléatoirement
+    j = randint(1, 2)
 
-    # Vérification si la liste contient bien deux joueurs
-    if len(listej) < 2:
-        print("Erreur : il doit y avoir exactement 2 joueurs.")
-        return
+    if mode_jeu == 0 :
+        # Liste des joueurs
+        listej = listejoueur("devinette", mode_jeu)
     
+        if j == 1 :
+            joueur1 = listej[0]
+            joueur2 = listej[1]
+        else :
+            joueur1 = listej[1]
+            joueur2 = listej[0]
+    
+    if mode_jeu == 1 :
+        # Liste des joueurs
+        listej = listejoueur("devinette", mode_jeu)
+
+        if j == 1 :
+            joueur1 = listej[0]
+            joueur2 = listej[1]
+        else :
+            joueur1 = listej[1]
+            joueur2 = listej[0]
+
+    if mode_jeu == 2 :
+        listej = listejoueur("devinette", mode_jeu)
+
+        if j == 1 :
+            joueur1 = listej[0]
+            joueur2 = listej[1]
+        else :  
+            joueur1 = listej[1]
+            joueur2 = listej[0]
+    
+    else :
+        #Nom par défaut si problème
+        joueur1 = "joueur1"
+        joueur2 = "joueur2"
+
+############################################################
+
     #Effacement de la console avec un sleep pour laisser le temps de lire
     sleep(3)
     effacer_console()
     nombrelignehorizontale(1, 55)
     print("\033[92m Lancement du jeu de la devinette \033[0m")
     nombrelignehorizontale(1, 55)
-
-    # Assigner les joueurs aléatoirement
-    j = randint(1, 2)
-
-    if j == 1 :
-        joueur1 = listej[0]
-        joueur2 = listej[1]
-    else :
-        joueur1 = listej[1]
-        joueur2 = listej[0]
 
     #Choix du compteur
     print("Si vous rentrez autre chose que 'Oui', le compteur sera désactivé.")

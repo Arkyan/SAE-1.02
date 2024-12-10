@@ -253,40 +253,76 @@ def quitterjeux(jeux : str) :
 ##################################################################################################################
 ##################################################################################################################
 
-def listejoueur(jeux: str) -> List[str]:
+def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
     """
-    Fonction pour créer une liste de joueurs pour un jeu donné.
+    Fonction pour renvoyer la liste des joueurs pour un jeu donné.
     Args:
         jeux (str): Nom du jeu
+        mode_jeu (int): Mode de jeu choisi
     Returns:
         List[str]: Liste des noms des joueurs
     """
+    compteur: int 
+    compteur = 0
 
-    compteur: int = 0
-    joueurs: List[str] = []
+    joueurs: List[str] 
+    joueurs = []
 
     print("\033[33mVous devez d'abord rentrer les noms des joueurs : \033[0m")
     print("Saisissez le nom des deux joueurs : ")
 
     # Collecter les noms des joueurs
-    while compteur < 2:
-        nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
-
-        while nom == "":  # Vérifier si le nom est vide
-            print("\033[33mErreur : le nom du joueur ne peut pas être vide. Veuillez réessayer.\033[0m")
+    # Mode de jeu Joueur contre Joueur
+    if mode_jeu == 0 :
+        while compteur < 2:
             nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
-        
-        # Normalisation du nom : enlever les espaces, mettre en minuscules et capitaliser
-        nom_normalise = nom.strip().capitalize()
-        
-        joueurs.append(nom_normalise)
-        compteur += 1        
 
-    # Enregistrer les joueurs et leur score initial (0) dans le fichier
-    for joueur in joueurs:
-        enregistrer_score_binaire(jeux, joueur, 0)
+            while nom == "":  # Vérifier si le nom est vide
+                print("\033[33mErreur : le nom du joueur ne peut pas être vide. Veuillez réessayer.\033[0m")
+                nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
+        
+            # Normalisation du nom : enlever les espaces, mettre en minuscules et capitaliser
+            nom_normalise = nom.strip().capitalize()
 
-    return joueurs  # Retourner directement la liste des joueurs
+            joueurs.append(nom_normalise)
+            compteur += 1    
+
+        # Enregistrer les joueurs et leur score initial (0) dans le fichier
+        for joueur in joueurs:
+            enregistrer_score_binaire(jeux, joueur, 0)
+
+        return joueurs  # Retourner directement la liste des joueurs
+    
+    # Mode de jeu Joueur contre IA
+    if mode_jeu == 1 :
+        while compteur < 1:
+            nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
+
+            while nom == "":
+                print("\033[33mErreur : le nom du joueur ne peut pas être vide. Veuillez réessayer.\033[0m")
+                nom = str(inputCustom(f"Entrez le nom du joueur {compteur + 1} : ", str, "Le nom doit être une chaîne de caractères."))
+
+            # Normalisation du nom : enlever les espaces, mettre en minuscules et capitaliser
+            nom_normalise = nom.strip().capitalize()
+
+            joueurs.append(nom_normalise)
+            compteur += 1
+
+        # Enregistrer les joueurs et leur score initial (0) dans le fichier
+        for joueur in joueurs:
+            enregistrer_score_binaire(jeux, joueur, 0)
+
+        joueurs.append("IA1")  # Ajouter l'IA comme deuxième joueur
+        return joueurs  # Retourner directement la liste des joueurs
+    
+    # Mode de jeu IA contre IA
+    if mode_jeu == 2 :
+        print("Mode de jeu IA contre IA")
+        joueurs = ["IA1", "IA2"]
+
+        return joueurs
+    
+    return joueurs
 
 ########################################################
 ########################################################
@@ -526,6 +562,72 @@ def afficher_scores_total() -> None:
         print("=" * 50)
 
     quitterjeux("main")
+
+
+##################################################################################################################
+##################################################################################################################
+##################################            GESTION             ################################################
+##################################              DES               ################################################
+##################################          DIFFICULTES           ################################################
+##################################################################################################################
+##################################################################################################################
+
+def choix_difficulte() -> int:
+    """
+    Fonction pour choisir la difficulté de l'IA pour un jeu donné.
+    Args:
+        jeux (str): Nom du jeu
+    Returns:
+        int: Niveau de difficulté choisi
+    """
+    liste_difficultes : List[str]
+    liste_difficultes = ["Hasard", "Entre-deux", "Complexe"]
+    difficulte : int
+    difficulte = 0 
+
+    print("\033[33mChoisissez le niveau de difficulté de l'IA : \033[0m")
+    switch(liste_difficultes)
+    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 0, 2))
+
+    return difficulte
+
+####################
+
+def choix_mode_jeu() -> int:
+    """
+    Fonction pour choisir le mode de jeu pour un jeu donné.
+    Args:
+        jeux (str): Nom du jeu
+    Returns:
+        int: Mode de jeu choisi
+    """
+    liste_mode : List[str]
+    liste_mode = ["Joueur contre Joueur", "Joueur contre IA", "IA contre IA"]
+    mode : int
+    mode = 0 
+
+    print("\033[33mChoisissez le mode de jeu : \033[0m")
+    switch(liste_mode)
+    mode = int(inputCustom("\033[33mEntrez le numéro correspondant au mode de jeu choisi : \033[0m", int, "La valeur doit être un entier", 0, 2))
+
+    return mode
+
+##################
+
+def si_IA(listejoueur : List[str]) -> int :
+    """
+    Fonction pour savoir si l'IA joue 
+    Args:
+        None : None
+    Returns:
+        None : None
+    """
+    for i in range(len(listejoueur)) :
+        if listejoueur[i] == "IA1" or listejoueur[i] == "IA2" :
+            return 1
+        else :
+            return 0
+    return 0
 
 ##################################################################################################################
 ##################################################################################################################
