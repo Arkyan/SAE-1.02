@@ -60,30 +60,26 @@ def bot_allumette(difficulte : int, nbr_allumette_restante : int) -> int :
                     nbr_allumettes_prise = randint(1, 3)
                     print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
                     return nbr_allumettes_prise
-    else :
-        for i in range(1, 5) :
-            if nbr_allumette_restante - 1 == 4*i :
-                nbr_allumettes_prise = nbr_allumette_restante - 1
-                print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-                return nbr_allumettes_prise
-            elif nbr_allumette_restante - 2 == 4*i :
-                nbr_allumettes_prise = nbr_allumette_restante - 2
-                print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-                return nbr_allumettes_prise
-            elif nbr_allumette_restante - 3 == 4*i :
-                nbr_allumettes_prise = nbr_allumette_restante - 3
-                print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-                return nbr_allumettes_prise
-            else :
-                nbr_allumettes_prise = randint(1, 3)
-                print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-                return nbr_allumettes_prise
+    else:
+        for i in range(1, 5):
+            if nbr_allumette_restante - 1 == 4 * i and nbr_allumette_restante > 1:
+                nbr_allumettes_prise = 1
+            elif nbr_allumette_restante - 2 == 4 * i and nbr_allumette_restante > 2:
+                nbr_allumettes_prise = 2
+            elif nbr_allumette_restante - 3 == 4 * i and nbr_allumette_restante > 3:
+                nbr_allumettes_prise = 3
+            else:
+                nbr_allumettes_prise = min(randint(1, 3), nbr_allumette_restante)  # Respecte les allumettes restantes
+            print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
+            return nbr_allumettes_prise
+        
     print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
     return nbr_allumettes_prise
 
 ####################################################################################################
 
 def allumette():
+
     """
     Fonction pour jouer au jeu des allumettes \n
     Paramètres : None \n
