@@ -2,7 +2,6 @@ from fonction import *
 from time import sleep
 from random import randint
 
-
 def plateau(grille: list[list[str]]) -> None:
     """
     Affiche le plateau de jeu avec des lignes et colonnes numérotées.
@@ -17,12 +16,14 @@ def plateau(grille: list[list[str]]) -> None:
         print(f"{i + 1} |" + "|".join(f" {case} " for case in ligne) + "|")  # Affiche les cases
         print("  +" + "---+" * 7)  # Ligne de séparation
 
+    
+
 ############################################################
 ############################################################
 ############################################################
 
 def verif_plein (grille: list[list[str]]) -> bool:
-    """
+    """ 
     Vérifie si la grille est pleine.
     Args:
         grille (list[list[str]]): Grille de jeu.
@@ -111,6 +112,30 @@ def occurencejouer(grille: list[list[str]], joueur: str, colonne: int) -> None:
 ############################################################
 ############################################################
 
+def bot_puissance4(grille: list[list[str]], joueur: str, difficulte: int) -> int:
+    """
+    Fonction qui permet à l'IA de choisir une colonne pour jouer.
+    Args:
+        grille (list[list[str]]): Grille de jeu.
+        joueur (str): Joueur actuel.
+        difficulte (int): Difficulté de l'IA.
+    Returns:
+        int : Colonne choisie par l'IA.
+    """
+    colonne : int
+    colonne = 1  # Colonne par défaut
+
+    # Difficulté hasard
+    if difficulte == 0:
+        colonne = randint(1, 7)  # Choix aléatoire de la colonne
+        print(f"L'IA a choisi la colonne {colonne}.")
+
+    return colonne
+
+############################################################
+############################################################
+############################################################
+
 #Initialisation du jeu
 def puissance4() -> None:
     """
@@ -128,23 +153,75 @@ def puissance4() -> None:
     # Réinitialisation des scores
     reinitialiser_scores_binaire("puissance4")
 
-    # Initialisation des joueurs
-    listej = listejoueur("puissance4")  # Récupère la liste des joueurs
-    if len(listej) < 2:
-        print("Erreur : il doit y avoir exactement 2 joueurs.")
-        return
+    #Choix du mode de jeu ainsi que de la difficulté
+    mode_jeu = choix_mode_jeu()
+    if mode_jeu == 0 :
+        print("Vous avez choisi le mode Joueur contre Joueur")
+        difficulte = 0
+    else :
+        difficulte = choix_difficulte()
 
-    # Assignation aléatoire des joueurs aux signes
-    if randint(1, 2) == 1:
+# ──────────────────────────────────────────────────────────────
+#                ASSIGNATION DES JOUEURS AU HASARD
+# ──────────────────────────────────────────────────────────────
+    j = randint(1, 2)
+
+    #Choix des joueurs
+    #Mode Joueur contre Joueur
+    if mode_jeu == 0 :
+        # Liste des joueurs
+        listej = listejoueur("morpion", mode_jeu)
+    
+        if j == 1 :
+            joueur1 = listej[0]
+            joueur2 = listej[1]
+            signe1 = "\033[33m■\033[0m" # Couleur jaune 🟡
+            signe2 = "\033[31m■\033[0m" # Couleur rouge 🔴
+        else :
+            joueur1 = listej[1]
+            joueur2 = listej[0]
+            signe1 = "\033[31m■\033[0m" # Couleur rouge 🔴
+            signe2 = "\033[33m■\033[0m" # Couleur jaune 🟡
+    
+    #Mode Joueur contre IA
+    elif mode_jeu == 1 :
+        # Liste des joueurs
+        listej = listejoueur("morpion", mode_jeu)
+
+        if j == 1 :
+            joueur1 = listej[0]
+            joueur2 = listej[1]
+            signe1 = "\033[33m■\033[0m" # Couleur jaune 🟡
+            signe2 = "\033[31m■\033[0m" # Couleur rouge 🔴
+        else :
+            joueur1 = listej[1]
+            joueur2 = listej[0]
+            signe1 = "\033[31m■\033[0m" # Couleur rouge 🔴
+            signe2 = "\033[33m■\033[0m" # Couleur jaune 🟡
+
+    #Mode IA contre IA
+    elif mode_jeu == 2 :
+        listej = listejoueur("morpion", mode_jeu)
+
+        if j == 1 :
+            joueur1 = listej[0]
+            joueur2 = listej[1]
+            signe1 = "\033[33m■\033[0m" # Couleur jaune 🟡
+            signe2 = "\033[31m■\033[0m" # Couleur rouge 🔴
+        else :  
+            joueur1 = listej[1]
+            joueur2 = listej[0]
+            signe1 = "\033[31m■\033[0m" # Couleur rouge 🔴
+            signe2 = "\033[33m■\033[0m" # Couleur jaune 🟡
+    
+    else :
+        #Nom par défaut si problème
+        print("Pas normal si nous sommes ici")
+        listej = ["Joueur 1", "Joueur 2"]
         joueur1 = listej[0]
         joueur2 = listej[1]
         signe1 = "\033[33m■\033[0m" # Couleur jaune 🟡
         signe2 = "\033[31m■\033[0m" # Couleur rouge 🔴
-    else:
-        joueur1 = listej[1]
-        joueur2 = listej[0]
-        signe1 = "\033[31m■\033[0m" # Couleur rouge 🔴
-        signe2 = "\033[33m■\033[0m" # Couleur jaune 🟡
 
     print(f"{joueur1} jouera avec les {signe1} et {joueur2} jouera avec les {signe2}")
     sleep(3)
@@ -154,42 +231,143 @@ def puissance4() -> None:
     joueur_actuel = joueur1
     signe_actuel =  signe1  
 
+# ──────────────────────────────────────────────────────────────
+#                BOUCLE PRINCIPALE DU JEU
+# ──────────────────────────────────────────────────────────────
+
+# ──────────────────────────────────────────────────────────────
+#                MODE JOUEUR CONTRE JOUEUR
+# ──────────────────────────────────────────────────────────────
+    if mode_jeu == 0 :
+        while not victoire and not plein:
+            plateau(grille)  # Affiche la grille
+            print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
+            colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1  # Demande au joueur de choisir une colonne
+
+            # Vérifie si la case est prise
+            while colonne_pleine(grille, colonne):
+                nombrelignehorizontale(1, 55)
+                print("La colonne est pleine. Veuillez en choisir une autre.")
+                colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1
+
+            # Joue le coup
+            occurencejouer(grille, signe_actuel, colonne)
+
+            # Vérifie la victoire ou si la grille est pleine
+            victoire = verif_victoire(grille, signe_actuel)
+            plein = verif_plein(grille)
+
+            # Affiche le résultat si le jeu est terminé
+            if victoire:
+                plateau(grille)
+                print(f"Félicitations {joueur_actuel} ({signe_actuel}) ! Vous avez gagné ! 🎉")
+                enregistrer_score_binaire("puissance4", joueur_actuel, 1)
+
+            elif plein:
+                plateau(grille)
+                print("Match nul ! La grille est pleine.")
+
+            # Change de joueur
+            if joueur_actuel == joueur1:
+                joueur_actuel, signe_actuel = joueur2, signe2
+            else:
+                joueur_actuel, signe_actuel = joueur1, signe1
 
 
-    # Boucle principale du jeu
-    while not victoire and not plein:
-        plateau(grille)  # Affiche la grille
-        colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1  # Demande au joueur de choisir une colonne
+# ──────────────────────────────────────────────────────────────
+#                MODE JOUEUR CONTRE IA
+# ──────────────────────────────────────────────────────────────
 
-        # Vérifie si la case est prise
-        while colonne_pleine(grille, colonne):
-            nombrelignehorizontale(1, 55)
-            print("La colonne est pleine. Veuillez en choisir une autre.")
-            colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1
-
-        # Joue le coup
-        occurencejouer(grille, signe_actuel, colonne)
-
-        # Vérifie la victoire ou si la grille est pleine
-        victoire = verif_victoire(grille, signe_actuel)
-        plein = verif_plein(grille)
-
-        # Affiche le résultat si le jeu est terminé
-        if victoire:
+    elif mode_jeu == 1 :
+        while not victoire and not plein:
             plateau(grille)
-            print(f"Félicitations {joueur_actuel} ({signe_actuel}) ! Vous avez gagné ! 🎉")
-            enregistrer_score_binaire("puissance4", joueur_actuel, 1)
 
-        elif plein:
+            if joueur_actuel == "IA1":
+                print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
+                colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+            else:
+                print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
+                colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1
+
+            # Vérifie si la case est prise
+            while colonne_pleine(grille, colonne):
+                nombrelignehorizontale(1, 55)
+                print("La colonne est pleine. Veuillez en choisir une autre.")
+                if joueur_actuel == "IA1":
+                    colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+                else:
+                    colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1
+
+            # Joue le coup
+            occurencejouer(grille, signe_actuel, colonne)
+
+            # Vérifie la victoire ou si la grille est pleine
+            victoire = verif_victoire(grille, signe_actuel)
+            plein = verif_plein(grille)
+
+            # Affiche le résultat si le jeu est terminé
+            if victoire and joueur_actuel != "IA1":
+                plateau(grille)
+                print(f"Félicitations {joueur_actuel} ({signe_actuel}) ! Vous avez gagné ! 🎉")
+                enregistrer_score_binaire("puissance4", joueur_actuel, 1)
+
+            elif victoire and joueur_actuel == "IA1":
+                plateau(grille)
+                print(f"Bien joué {joueur_actuel} ({signe_actuel}) ! Vous avez gagné ! 🎉")
+                print("Pas de score pour l'IA")
+
+            elif plein:
+                plateau(grille)
+                print("Match nul ! La grille est pleine.")
+
+            # Change de joueur
+            if joueur_actuel == joueur1:
+                joueur_actuel, signe_actuel = joueur2, signe2
+            else:
+                joueur_actuel, signe_actuel = joueur1, signe1
+
+            
+# ──────────────────────────────────────────────────────────────
+#                MODE IA CONTRE IA
+# ──────────────────────────────────────────────────────────────
+    elif mode_jeu == 2 :
+        while not victoire and not plein:
+            sleep(1)
             plateau(grille)
-            print("Match nul ! La grille est pleine.")
 
-        # Change de joueur
-        if joueur_actuel == joueur1:
-            joueur_actuel, signe_actuel = joueur2, signe2
-        else:
-            joueur_actuel, signe_actuel = joueur1, signe1
+            print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
+            colonne = bot_puissance4(grille, joueur_actuel, difficulte)
 
-    #Affichage final 
+            # Vérifie si la case est prise
+            while colonne_pleine(grille, colonne):
+                print("La colonne est pleine. Veuillez en choisir une autre.")
+                colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+
+            # Joue le coup
+            occurencejouer(grille, signe_actuel, colonne)
+
+            # Vérifie la victoire ou si la grille est pleine
+            victoire = verif_victoire(grille, signe_actuel)
+            plein = verif_plein(grille)
+
+            # Affiche le résultat si le jeu est terminé
+            if victoire:
+                plateau(grille)
+                print(f"Félicitations {joueur_actuel} ({signe_actuel}) ! Vous avez gagné ! 🎉")
+                print("Pas de score pour l'IA")
+
+            elif plein:
+                plateau(grille)
+                print("Match nul ! La grille est pleine.")
+
+            # Change de joueur
+            if joueur_actuel == joueur1:
+                joueur_actuel, signe_actuel = joueur2, signe2
+            else:
+                joueur_actuel, signe_actuel = joueur1, signe1
+
+# ──────────────────────────────────────────────────────────────
+#                AFFICHAGE FINAL
+# ──────────────────────────────────────────────────────────────
     afficher_scores_final("puissance4")
     quitterjeux("puissance4")
