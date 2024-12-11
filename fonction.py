@@ -583,7 +583,7 @@ def choix_difficulte() -> int:
         int: Niveau de difficulté choisi
     """
     liste_difficultes : List[str]
-    liste_difficultes = ["Hasard", "Entre-deux", "EN DEV"]
+    liste_difficultes = ["Hasard / Facile", "Entre-deux / Intermédiaire", "Imbattable"]
     difficulte : int
     difficulte = 0 
 

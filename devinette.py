@@ -86,6 +86,8 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
     Returns:
         int: Le nombre donné par le bot.
     """
+    from random import randint
+
     valeur_renvoye: int
 
     # Mode hasard
@@ -97,22 +99,34 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
     # Mode entre-deux
     elif difficulte == 1:
         if retour_jeu == 1:  # Plus petit
-            borne_max = min(borne_max, nbr_prec - 1)  # Mise à jour de la borne maximale
+            borne_max = min(borne_max, nbr_prec - 1)
         elif retour_jeu == 0:  # Plus grand
-            borne_min = max(borne_min, nbr_prec + 1)  # Mise à jour de la borne minimale
+            borne_min = max(borne_min, nbr_prec + 1)
 
         valeur_renvoye = randint(borne_min, borne_max)
         print(f"Le nombre donné par l'IA est {valeur_renvoye} (intervalle: [{borne_min}, {borne_max}])")
         return valeur_renvoye
 
-    # Mode dichotomie/complexe
+    # Mode difficulté maximale
     else:
         if retour_jeu == 1:  # Plus petit
             borne_max = min(borne_max, nbr_prec - 1)
         elif retour_jeu == 0:  # Plus grand
             borne_min = max(borne_min, nbr_prec + 1)
 
-        valeur_renvoye = (borne_min + borne_max) // 2  # Stratégie dichotomique
+        # Stratégie : Choisir un nombre biaisé dans la partie la plus "prometteuse"
+        inter = borne_max - borne_min + 1
+        if inter <= 4:
+            # Quand l'intervalle est petit, joue au hasard dans l'intervalle
+            valeur_renvoye = randint(borne_min, borne_max)
+        else:
+            # Priorisation biaisée : choisir un tiers supérieur de l'intervalle
+            tiers = inter // 3
+            if retour_jeu == 0:  # Si plus grand, privilégier la borne supérieure
+                valeur_renvoye = randint(borne_min + tiers * 2, borne_max)
+            else:  # Si plus petit, privilégier la borne inférieure
+                valeur_renvoye = randint(borne_min, borne_max - tiers)
+
         print(f"Le nombre donné par l'IA est {valeur_renvoye} (intervalle: [{borne_min}, {borne_max}])")
         return valeur_renvoye
         
@@ -367,6 +381,7 @@ def devinette():
 
             # Le joueur 2 fait une supposition
             nbrdevine = bot_devinnette(difficulte, intervalle, valeur, nbrdevine, borne_min, borne_max)
+
             listecoup.append(nbrdevine)
             menu("devinette")
             valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
@@ -417,11 +432,11 @@ def devinette():
         borne_max = intervalle
 
         while not gagner :
-            sleep(3)
             effacer_console()
 
             # Le joueur 2 fait une supposition
             nbrdevine = bot_devinnette(difficulte, intervalle, valeur, nbrdevine, borne_min, borne_max)
+
             listecoup.append(nbrdevine)
             valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
 
@@ -471,6 +486,7 @@ def devinette():
     print()
     for i in range(len(listecoup)) :
         print(f"Tour n°{i+1} : {listecoup[i]}")
+    print()
 
     #Affichage des scores
     afficher_scores_final("devinette")
