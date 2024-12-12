@@ -271,7 +271,7 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
 
     # Collecter les noms des joueurs
     # Mode de jeu Joueur contre Joueur
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         print("\033[33mVous devez d'abord rentrer les noms des joueurs : \033[0m")
         print("Saisissez le nom des deux joueurs : ")
         while compteur < 2:
@@ -294,7 +294,7 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
         return joueurs  # Retourner directement la liste des joueurs
     
     # Mode de jeu Joueur contre IA
-    elif mode_jeu == 1 :
+    elif mode_jeu == 2 :
         print("\033[33mVous devez d'abord rentrer le nom du joueur : \033[0m")
         print("Saisissez le nom du joueur : ")
         while compteur < 1:
@@ -318,7 +318,7 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
         return joueurs  # Retourner directement la liste des joueurs
     
     # Mode de jeu IA contre IA
-    elif mode_jeu == 2 :
+    elif mode_jeu == 3 :
         print("Pas besoin de rentrer de nom pour les IA.")
         print("Mode de jeu IA contre IA")
         joueurs = ["IA1", "IA2"]
@@ -607,11 +607,11 @@ def choix_mode_jeu() -> int:
     liste_mode : List[str]
     liste_mode = ["Joueur contre Joueur", "Joueur contre IA", "IA contre IA"]
     mode : int
-    mode = 0 
+    mode = 1 
 
     print("\033[33mChoisissez le mode de jeu : \033[0m")
     switch(liste_mode)
-    mode = int(inputCustom("\033[33mEntrez le numéro correspondant au mode de jeu choisi : \033[0m", int, "La valeur doit être un entier", 0, 2))
+    mode = int(inputCustom("\033[33mEntrez le numéro correspondant au mode de jeu choisi : \033[0m", int, "La valeur doit être un entier", 1, 3))
 
     return mode
 
