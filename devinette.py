@@ -47,15 +47,15 @@ def bot_choix_intervalle(mode_jeu : int) -> int :
     intervalle = 0
 
     #Mode hasard
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         intervalle = randint(1, 100)
 
     #Mode entre-deux
-    if mode_jeu == 1 :
+    if mode_jeu == 2 :
         intervalle = randint(1, 1000)
 
     #Mode dichotomie/complexe
-    if mode_jeu == 2 :
+    if mode_jeu == 3 :
         intervalle = randint(1, 10000)
 
     return intervalle
@@ -91,13 +91,13 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
     valeur_renvoye: int
 
     # Mode hasard
-    if difficulte == 0:
+    if difficulte == 1:
         valeur_renvoye = randint(1, intervalle)
         print(f"Le nombre donné par l'IA est {valeur_renvoye}")
         return valeur_renvoye
 
     # Mode entre-deux
-    elif difficulte == 1:
+    elif difficulte == 2:
         if retour_jeu == 1:  # Plus petit
             borne_max = min(borne_max, nbr_prec - 1)
         elif retour_jeu == 0:  # Plus grand
@@ -192,7 +192,7 @@ def devinette():
 
     #Choix du mode de jeu ainsi que de la difficulté
     mode_jeu = choix_mode_jeu()
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         print("Vous avez choisi le mode Joueur contre Joueur")
         difficulte = 0
     else :
@@ -205,7 +205,7 @@ def devinette():
 
     #Choix des joueurs
     #Mode Joueur contre Joueur
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         # Liste des joueurs
         listej = listejoueur("devinette", mode_jeu)
     
@@ -217,7 +217,7 @@ def devinette():
             joueur2 = listej[0]
     
     #Mode Joueur contre IA
-    elif mode_jeu == 1 :
+    elif mode_jeu == 2 :
         # Liste des joueurs
         listej = listejoueur("devinette", mode_jeu)
 
@@ -229,7 +229,7 @@ def devinette():
             joueur2 = listej[0]
 
     #Mode IA contre IA
-    elif mode_jeu == 2 :
+    elif mode_jeu == 3 :
         listej = listejoueur("devinette", mode_jeu)
 
         if j == 1 :

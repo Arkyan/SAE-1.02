@@ -278,7 +278,7 @@ def puissance4() -> None:
 
     #Choix du mode de jeu ainsi que de la difficulté
     mode_jeu = choix_mode_jeu()
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         print("Vous avez choisi le mode Joueur contre Joueur")
         difficulte = 0
     else :
@@ -291,7 +291,7 @@ def puissance4() -> None:
 
     #Choix des joueurs
     #Mode Joueur contre Joueur
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         # Liste des joueurs
         listej = listejoueur("morpion", mode_jeu)
     
@@ -307,7 +307,7 @@ def puissance4() -> None:
             signe2 = "\033[33m■\033[0m" # Couleur jaune 🟡
     
     #Mode Joueur contre IA
-    elif mode_jeu == 1 :
+    elif mode_jeu == 2 :
         # Liste des joueurs
         listej = listejoueur("morpion", mode_jeu)
 
@@ -323,7 +323,7 @@ def puissance4() -> None:
             signe2 = "\033[33m■\033[0m" # Couleur jaune 🟡
 
     #Mode IA contre IA
-    elif mode_jeu == 2 :
+    elif mode_jeu == 3 :
         listej = listejoueur("morpion", mode_jeu)
 
         if j == 1 :
@@ -361,7 +361,7 @@ def puissance4() -> None:
 # ──────────────────────────────────────────────────────────────
 #                MODE JOUEUR CONTRE JOUEUR
 # ──────────────────────────────────────────────────────────────
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         while not victoire and not plein:
             plateau(grille)  # Affiche la grille
             print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
@@ -401,7 +401,7 @@ def puissance4() -> None:
 #                MODE JOUEUR CONTRE IA
 # ──────────────────────────────────────────────────────────────
 
-    elif mode_jeu == 1 :
+    elif mode_jeu == 2 :
         while not victoire and not plein:
             plateau(grille)
 
@@ -455,7 +455,7 @@ def puissance4() -> None:
 # ──────────────────────────────────────────────────────────────
 #                MODE IA CONTRE IA
 # ──────────────────────────────────────────────────────────────
-    elif mode_jeu == 2 :
+    elif mode_jeu == 3 :
         while not victoire and not plein:
             plateau(grille)
 

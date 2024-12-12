@@ -18,7 +18,6 @@ def affichage_Partie_Allumette(ResteAllumette : int, joueur_actuel : str) -> Non
 
 ####################################################################################################
 
-
 def bot_allumette(difficulte : int, nbr_allumette_restante : int) -> int :
     """
     Fonction pour le bot pour le jeu des allumettes.
@@ -31,13 +30,13 @@ def bot_allumette(difficulte : int, nbr_allumette_restante : int) -> int :
     nbr_allumettes_prise = 0
 
     # Difficulté hasard (facile)
-    if difficulte == 0:
+    if difficulte == 1:
         nbr_allumettes_prise = randint(1, 3)
         print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
         return nbr_allumettes_prise
     
     # Difficulté entre-deux (intermédiaire)
-    elif difficulte == 1:
+    elif difficulte == 2:
         # Le bot prend parfois des décisions optimales, mais parfois il joue de manière aléatoire.
         if randint(1, 10) <= 6:  # 60% de chance de jouer de manière optimale
             # Stratégie partiellement optimale : amener l'adversaire dans une position perdante
@@ -90,7 +89,7 @@ def allumette():
 
     #Choix du mode de jeu ainsi que de la difficulté
     mode_jeu = choix_mode_jeu()
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         print("Vous avez choisi le mode Joueur contre Joueur")
         difficulte = 0
     else :
@@ -104,7 +103,7 @@ def allumette():
 
     #Choix des joueurs
     #Mode Joueur contre Joueur
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         # Liste des joueurs
         listej = listejoueur("allumette", mode_jeu)
     
@@ -116,7 +115,7 @@ def allumette():
             joueur2 = listej[0]
     
     #Mode Joueur contre IA
-    elif mode_jeu == 1 :
+    elif mode_jeu == 2 :
         # Liste des joueurs
         listej = listejoueur("allumette", mode_jeu)
 
@@ -128,7 +127,7 @@ def allumette():
             joueur2 = listej[0]
 
     #Mode IA contre IA
-    elif mode_jeu == 2 :
+    elif mode_jeu == 3 :
         listej = listejoueur("allumette", mode_jeu)
 
         if j == 1 :
@@ -156,7 +155,7 @@ def allumette():
 # ──────────────────────────────────────────────────────────────
 #                     MODE JOUEUR CONTRE JOUEUR
 # ──────────────────────────────────────────────────────────────
-    if mode_jeu == 0 :
+    if mode_jeu == 1 :
         while ResteAllumette > 0:
 
             # Afficher le nombre d'allumettes restantes et le joueur qui doit jouer
@@ -192,7 +191,7 @@ def allumette():
 # ──────────────────────────────────────────────────────────────
 #                MODE JOUEUR CONTRE IA
 # ──────────────────────────────────────────────────────────────
-    elif mode_jeu == 1 :
+    elif mode_jeu == 2 :
         while ResteAllumette > 0:
 
             # Afficher le nombre d'allumettes restantes et le joueur qui doit jouer
@@ -238,7 +237,7 @@ def allumette():
 # ──────────────────────────────────────────────────────────────
 #                MODE IA CONTRE IA
 # ──────────────────────────────────────────────────────────────
-    elif mode_jeu == 2 :
+    elif mode_jeu == 3 :
         while ResteAllumette > 0:
 
             # Afficher le nombre d'allumettes restantes et le joueur qui doit jouer

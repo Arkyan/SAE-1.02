@@ -133,7 +133,7 @@ def switch(cas : list[str]) :
         None : None
     """
     for i in range(len(cas)) :
-        print(str(i) + " : " + cas[i])
+        print(str(i+1) + " : " + cas[i])
 
 #########################################################
 #########################################################
@@ -162,9 +162,9 @@ def menu (cas : str) :
 
     if cas == "quitter" :
         print(" \033[33m Êtes-vous sûr de quitter les mini-jeux ? \033[0m")
-        x = inputCustom(" \033[33m 0 : Oui / 1 : Non --> \033[0m", int, "La valeur doit être un entier", 0, 1)
+        x = inputCustom(" \033[33m 0 : Non / 1 : Oui --> \033[0m", int, "La valeur doit être un entier", 0, 1)
 
-        if x == 0 :
+        if x == 1 :
             print("Merci d'avoir joué, à bientôt !")
             sleep(2)
             effacer_console()
@@ -172,6 +172,7 @@ def menu (cas : str) :
             
         else :
             from main import main
+            effacer_console()
             main()
 
 #########################################################
@@ -191,10 +192,10 @@ def quitterjeux(jeux : str) :
 
     # Demander si le joueur veut quitter
     print("\033[33m Voulez-vous vraiment quitter ? \033[0m")
-    choix = int(inputCustom("\033[33m 0 : Oui / 1 : Non --> \033[0m", int, "La valeur doit être un entier", 0, 1))
+    choix = int(inputCustom("\033[33m 0 : Non / 1 : Oui --> \033[0m", int, "La valeur doit être un entier", 0, 1))
 
     # Si le joueur veut quitter
-    if choix == 0 :
+    if choix == 1 :
         print("Merci d'avoir joué, à bientôt !")
         print("Retour au menu principal")
 
@@ -206,7 +207,7 @@ def quitterjeux(jeux : str) :
         main()
     
     # Si le joueur veut relancer une partie
-    if choix == 1 :
+    if choix == 0 :
         print("Relancer une partie !")
 
         if jeux == "devinette" :
@@ -504,9 +505,9 @@ def reinitialiser_scores_binaire(nom_jeu: str) -> None:
     choix: int
 
     print(f"\033[33m Voulez-vous réinitialiser les scores pour le jeu {nom_jeu} ? \033[0m")
-    choix = int(inputCustom("\033[33m 0 : Oui / 1 : Non --> \033[0m", int, "La valeur doit être un entier", 0, 1))
+    choix = int(inputCustom("\033[33m 0 : Non / 1 : Oui --> \033[0m", int, "La valeur doit être un entier", 0, 1))
 
-    if choix == 0: 
+    if choix == 1: 
         print(f"Réinitialisation des scores pour le jeu {nom_jeu}...")
 
         try:
@@ -520,7 +521,7 @@ def reinitialiser_scores_binaire(nom_jeu: str) -> None:
         except FileNotFoundError:
             print(f'Le fichier pour le jeu {nom_jeu} est introuvable.')
     
-    if choix == 1:
+    if choix == 0:
         print("Lancement du jeu...")
 
 ########################################################
@@ -585,11 +586,11 @@ def choix_difficulte() -> int:
     liste_difficultes : List[str]
     liste_difficultes = ["Hasard / Facile", "Entre-deux / Intermédiaire", "Imbattable"]
     difficulte : int
-    difficulte = 0 
+    difficulte = 1
 
     print("\033[33mChoisissez le niveau de difficulté de l'IA : \033[0m")
     switch(liste_difficultes)
-    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 0, 2))
+    difficulte = int(inputCustom("\033[33mEntrez le numéro correspondant à la difficulté choisie : \033[0m", int, "La valeur doit être un entier", 1, 3))
 
     return difficulte
 
