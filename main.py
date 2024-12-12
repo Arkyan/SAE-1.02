@@ -1,7 +1,7 @@
 from fonction import *
 from devinette import devinette
 from allumette import allumette
-from morpion import morpionjouer
+from morpion import morpion
 from puissance4Bonus import puissance4
 
 def main () :
@@ -20,7 +20,7 @@ def main () :
         
     if choix == 2 :
         lancement("morpion")
-        morpionjouer()
+        morpion()
 
     if choix == 3 :
         lancement("puissance4")

@@ -1,6 +1,7 @@
 from fonction import *
 from time import sleep
 from random import randint
+from random import choice
 
 def plateau(grille: list[list[str]]) -> None:
     """
@@ -9,60 +10,16 @@ def plateau(grille: list[list[str]]) -> None:
     :param grille: Liste de listes représentant le plateau de jeu
     """
     effacer_console()
-    print("    1   2   3   4   5   6   7")  # En-tête des colonnes
-    print("  +" + "   +" * 7)  # Ligne supérieure
-
-    for i, ligne in enumerate(grille):  # Parcourt chaque ligne de la grille
-        print(f"{i + 1} |" + "|".join(f" {case} " for case in ligne) + "|")  # Affiche les cases
-        print("  +" + "---+" * 7)  # Ligne de séparation
-
-    
-
-############################################################
-############################################################
-############################################################
-
-def verif_plein (grille: list[list[str]]) -> bool:
-    """ 
-    Vérifie si la grille est pleine.
-    Args:
-        grille (list[list[str]]): Grille de jeu.
-    Returns:
-        bool : True si la grille est pleine, False sinon.
-    """
+    print("  1   2   3   4   5   6   7")  # En-tête des colonnes
+    print("+" + "   +" * 7)  # Ligne supérieure
 
     for ligne in grille:  # Parcourt chaque ligne de la grille
-        if " " in ligne:  # S'il reste une case vide
-            return False  # La grille n'est pas pleine
-    return True  # La grille est pleine
+        print("|", end="")  # Début de la ligne
+        print("|".join(f" {case} " for case in ligne), end="")  # Affiche les cases
+        print("|")  # Fin de la ligne
+        print("+" + "---+" * 7)  # Ligne de séparation
 
-############################################################
-############################################################
-############################################################
 
-def verif_victoire(grille: list[list[str]], joueur: str) -> bool:
-    """
-    Vérifie si un joueur a gagné.
-    Args:
-        grille (list[list[str]]): Grille de jeu.
-        joueur (str): Joueur actuel.
-    Returns:
-        bool : True si un joueur a gagné, False sinon.
-    """
-
-    for i in range(6):  # Parcourt les lignes
-        for j in range(7):  # Parcourt les colonnes
-            if grille[i][j] == joueur:  # Si la case contient le jeton du joueur
-                if j + 3 < 7 and grille[i][j + 1] == grille[i][j + 2] == grille[i][j + 3] == joueur:  # Vérifie l'horizontale
-                    return True
-                if i + 3 < 6:
-                    if grille[i + 1][j] == grille[i + 2][j] == grille[i + 3][j] == joueur:  # Vérifie la verticale
-                        return True
-                    if j + 3 < 7 and grille[i + 1][j + 1] == grille[i + 2][j + 2] == grille[i + 3][j + 3] == joueur:  # Vérifie la diagonale droite
-                        return True
-                    if j - 3 >= 0 and grille[i + 1][j - 1] == grille[i + 2][j - 2] == grille[i + 3][j - 3] == joueur:  # Vérifie la diagonale gauche
-                        return True
-    return False
 
 ############################################################
 ############################################################
@@ -82,7 +39,6 @@ def colonne_pleine(grille: list[list[str]], colonne: int) -> bool:
         return False
     else:
         return True
-
 
 ############################################################
 ############################################################
@@ -108,11 +64,118 @@ def occurencejouer(grille: list[list[str]], joueur: str, colonne: int) -> None:
     
     # La boucle se termine sans le besoin de `break`, car `case_placee` gère l'arrêt du placement.
 
+# ──────────────────────────────────────────────────────────────
+#                VÉRIFICATION DE LA VICTOIRE
+#                   ET DE LA GRILLE PLEINE
+# ──────────────────────────────────────────────────────────────
+
+def verif_plein (grille: list[list[str]]) -> bool:
+    """ 
+    Vérifie si la grille est pleine.
+    Args:
+        grille (list[list[str]]): Grille de jeu.
+    Returns:
+        bool : True si la grille est pleine, False sinon.
+    """
+
+    for ligne in grille:  # Parcourt chaque ligne de la grille
+        if " " in ligne:  # S'il reste une case vide
+            return False  # La grille n'est pas pleine
+    return True  # La grille est pleine
+
 ############################################################
 ############################################################
 ############################################################
 
-def bot_puissance4(grille: list[list[str]], joueur: str, difficulte: int) -> int:
+def verif_victoire(grille: list[list[str]], signe_actuel : str) -> bool:
+    """
+    Vérifie si un joueur a gagné en ayant un alignement de 4 jetons.
+
+    Args:
+        grille (list[list[str]]): Grille de jeu.
+        joueur (str): Jeton du joueur ("X" ou "O").
+    """
+    # Vérification horizontale
+    for i in range(6):  # 6 lignes
+        for j in range(4):  # Jusqu'à la 4e colonne
+            if (
+                grille[i][j] == grille[i][j + 1] == grille[i][j + 2] == grille[i][j + 3] == signe_actuel
+            ):
+                return True
+
+    # Vérification verticale
+    for i in range(3):  # Jusqu'à la 3e ligne
+        for j in range(7):  # 7 colonnes
+            if (
+                grille[i][j] == grille[i + 1][j] == grille[i + 2][j] == grille[i + 3][j] == signe_actuel
+            ):
+                return True
+
+    # Vérification diagonale montante (\)
+    for i in range(3):  # Jusqu'à la 3e ligne
+        for j in range(4):  # Jusqu'à la 4e colonne
+            if (
+                grille[i][j] == grille[i + 1][j + 1] == grille[i + 2][j + 2] == grille[i + 3][j + 3] == signe_actuel
+            ):
+                return True
+
+    # Vérification diagonale descendante (/)
+    for i in range(3, 6):  # À partir de la 3e ligne
+        for j in range(4):  # Jusqu'à la 4e colonne
+            if (
+                grille[i][j] == grille[i - 1][j + 1] == grille[i - 2][j + 2] == grille[i - 3][j + 3] == signe_actuel
+            ):
+                return True
+
+    return False
+
+
+def verif_victoire_potentielle(grille: list[list[str]], signe_actuel : str, colonne: int) -> bool:
+    """
+    Vérifie si un joueur peut gagner en jouant dans une colonne donnée.
+    Args:
+        grille (list[list[str]]): Grille de jeu.
+        joueur (str): Jeton du joueur ("X" ou "O").
+        colonne (int): Colonne dans laquelle le joueur joue hypothétiquement.
+    Returns:
+        bool: True si jouer dans cette colonne mène à une victoire, sinon False.
+    """
+    if not (0 <= colonne < 7):  # Vérifie que la colonne est valide
+        return False
+
+    # Trouver la première ligne vide dans cette colonne
+    for ligne in range(5, -1, -1):  # Parcourt les lignes de bas en haut
+        if grille[ligne][colonne] == " ":  # Si la case est vide
+            # Simuler le coup
+            grille[ligne][colonne] = signe_actuel
+            victoire = verif_victoire(grille, signe_actuel)  # Vérifie la victoire
+            # Annuler le coup
+            grille[ligne][colonne] = " "
+            return victoire
+
+    return False  # Si la colonne est pleine
+
+# ──────────────────────────────────────────────────────────────
+#                     BOT PUISSANCE 4
+# ──────────────────────────────────────────────────────────────
+def colonnes_possibles(grille: list[list[str]]) -> list[int]:
+    """
+    Retourne les colonnes où il est possible de jouer.
+    Args:
+        grille (list[list[str]]): Grille de jeu.
+    Returns:
+        list[int] : Liste des colonnes où il est possible de jouer.
+    """
+    colonnes : list[int] 
+    colonnes = []
+    for colonne in range(7):
+        if not colonne_pleine(grille, colonne):
+            colonnes.append(colonne)
+    return colonnes
+
+############################################################
+
+def bot_puissance4(grille: list[list[str]], signe_actuel : str, difficulte: int) -> int:
     """
     Fonction qui permet à l'IA de choisir une colonne pour jouer.
     Args:
@@ -122,19 +185,79 @@ def bot_puissance4(grille: list[list[str]], joueur: str, difficulte: int) -> int
     Returns:
         int : Colonne choisie par l'IA.
     """
-    colonne : int
-    colonne = 1  # Colonne par défaut
+    def colonne_valide(grille: list[list[str]], colonne: int) -> bool:
+        """Vérifie si une colonne n'est pas pleine."""
+        return grille[0][colonne] == " "
 
-    # Difficulté hasard
+    if signe_actuel == "\033[33m■\033[0m" :
+        adversaire = "\033[31m■\033[0m"
+    else:
+        adversaire = "\033[33m■\033[0m"
+
+    # Mode aléatoire
     if difficulte == 0:
-        colonne = randint(1, 7)  # Choix aléatoire de la colonne
-        print(f"L'IA a choisi la colonne {colonne}.")
+        colonnes_disponibles = [col for col in range(7) if colonne_valide(grille, col)]
+        if colonnes_disponibles:
+            colonne = choice(colonnes_disponibles)
+            print(f"L'IA ({signe_actuel}) choisit la colonne {colonne+1}")
+            return colonne
+        print("Toutes les colonnes sont pleines !")
+        return -1
 
-    return colonne
+
+    # Difficulté 1 : IA défensive/offensive simple
+    if difficulte == 1:
+
+        # Vérifier si l'IA peut gagner avec verif_victoire_potentielle
+        for colonne in range(7):
+            if verif_victoire_potentielle(grille, signe_actuel, colonne):
+                print(f"L'IA ({signe_actuel}) joue ici pour gagner la colonne {colonne+1}")
+                return colonne
+            
+        # Vérifier si le joueur peut gagner avec verif_victoire_potentielle
+        for colonne in range(7):
+            if verif_victoire_potentielle(grille, adversaire, colonne):
+                print(f"L'IA ({signe_actuel}) bloque la colonne {colonne+1}")
+                return colonne
+        
+        # Sinon, choisir une colonne aléatoire parmi les valides
+        colonnes_disponibles = [col for col in range(7) if colonne_valide(grille, col)]
+        if colonnes_disponibles:
+            colonne = choice(colonnes_disponibles)
+            print(f"L'IA ({signe_actuel}) choisit aléaoirement la colonne {colonne+1}")
+            return colonne
+        
+        # Si aucune colonne n'est valide
+        print("Toutes les colonnes sont pleines !")
+        return -1
+
+    return 1  # Valeur par défaut si aucune condition n'est remplie
 
 ############################################################
-############################################################
-############################################################
+
+def simulationcoups(grille: list[list[str]], joueur: str, colonne: int) -> list[list[str]]:
+    """
+    Simule un coup pour l'IA.
+    Args:
+        grille (list[list[str]]): Grille de jeu.
+        joueur (str): Joueur actuel.
+        colonne (int): Colonne choisie par l'IA.
+    Returns:
+        list[list[str]] : Grille de jeu après le coup simulé.
+    """
+    grille_copie = [ligne.copy() for ligne in grille]  # Copie de la grille
+
+    for i in range(0,7):  # Parcourt les lignes de la colonne choisie
+        if grille_copie[i][colonne] == " ":  # Si la case est vide
+            grille_copie[i][colonne] = joueur  # Place le jeton du joueur
+            # Arrête la boucle
+            break
+
+    return grille_copie
+
+# ──────────────────────────────────────────────────────────────
+#                FONCTION PRINCIPALE DU JEU
+# ──────────────────────────────────────────────────────────────
 
 #Initialisation du jeu
 def puissance4() -> None:
@@ -284,7 +407,8 @@ def puissance4() -> None:
 
             if joueur_actuel == "IA1":
                 print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
-                colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+                colonne = bot_puissance4(grille, signe_actuel, difficulte)
+                sleep(2)
             else:
                 print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
                 colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1
@@ -294,7 +418,8 @@ def puissance4() -> None:
                 nombrelignehorizontale(1, 55)
                 print("La colonne est pleine. Veuillez en choisir une autre.")
                 if joueur_actuel == "IA1":
-                    colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+                    colonne = bot_puissance4(grille, signe_actuel, difficulte)
+                    sleep(2)
                 else:
                     colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1
 
@@ -332,16 +457,16 @@ def puissance4() -> None:
 # ──────────────────────────────────────────────────────────────
     elif mode_jeu == 2 :
         while not victoire and not plein:
-            sleep(1)
             plateau(grille)
 
-            print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
-            colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+            colonne = bot_puissance4(grille, signe_actuel, difficulte)
+            sleep(2)
 
             # Vérifie si la case est prise
             while colonne_pleine(grille, colonne):
                 print("La colonne est pleine. Veuillez en choisir une autre.")
-                colonne = bot_puissance4(grille, joueur_actuel, difficulte)
+                colonne = bot_puissance4(grille, signe_actuel, difficulte)
+                sleep(2)
 
             # Joue le coup
             occurencejouer(grille, signe_actuel, colonne)
