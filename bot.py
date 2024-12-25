@@ -2,14 +2,16 @@ from fonction import *
 from random import choice
 from random import randint
 
+############################################################################################################
 # ──────────────────────────────────────────────────────────────
 #                BOTS DEVINETTE
 # ──────────────────────────────────────────────────────────────
+############################################################################################################
 
 def bot_choix_intervalle(mode_jeu : int) -> int :
 
     """
-    Fonction pour choisir l'intervalle de jeu pour le bot
+    Fonction pour faire choisir un intervalle par le bot.
     Args:
         mode_jeu (int): Le mode de jeu.
     Returns:
@@ -34,7 +36,7 @@ def bot_choix_intervalle(mode_jeu : int) -> int :
 
 def bot_choix_nombremystere(intervalle : int) -> int :
     """
-    Fonction pour choisir le nombre mystère pour le bot
+    Fonction pour faire choisir un nombre mystère par le bot.
     Args:
         intervalle (int): L'intervalle de jeu.
     Returns:
@@ -118,9 +120,11 @@ def bot_reponse_intervalle_devinette(nbr_devine : int, nbr_reponse : int) -> int
     else :
         return 2
     
+############################################################################################################    
 # ──────────────────────────────────────────────────────────────
 #                BOT ALLUMETTES
 # ──────────────────────────────────────────────────────────────
+############################################################################################################
 
 def bot_allumette(difficulte : int, nbr_allumette_restante : int) -> int :
     """
@@ -170,9 +174,11 @@ def bot_allumette(difficulte : int, nbr_allumette_restante : int) -> int :
         print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
         return nbr_allumettes_prise
 
+############################################################################################################
 # ──────────────────────────────────────────────────────────────
 #                BOT MORPION
 # ──────────────────────────────────────────────────────────────
+############################################################################################################
 
 def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[list[str]] :
     """
@@ -392,9 +398,11 @@ def deja_pris(mat : list[list[str]], l : int, c : int) -> bool :
         cond = True
     return cond
 
+############################################################################################################
 # ──────────────────────────────────────────────────────────────
 #                BOT PUISSANCE 4
 # ──────────────────────────────────────────────────────────────
+############################################################################################################
 
 def colonnes_possibles(grille: list[list[str]]) -> list[int]:
     """
