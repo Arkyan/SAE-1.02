@@ -1,8 +1,4 @@
 from fonction import *
-from devinette import devinette
-from allumette import allumette
-from morpion import morpionjouer
-from puissance4Bonus import puissance4
 
 def main () :
     choix : int
@@ -12,19 +8,15 @@ def main () :
     
     if choix == 1 : 
         lancement("devinette")
-        devinette()
         
     if choix == 2 :
         lancement("allumette")
-        allumette()
         
     if choix == 3 :
         lancement("morpion")
-        morpionjouer()
 
     if choix == 4 :
         lancement("puissance4")
-        puissance4()
 
     if choix == 5 :
         afficher_scores_total()

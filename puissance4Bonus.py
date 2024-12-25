@@ -195,7 +195,7 @@ def bot_puissance4(grille: list[list[str]], signe_actuel : str, difficulte: int)
         adversaire = "\033[33m■\033[0m"
 
     # Mode aléatoire
-    if difficulte == 0:
+    if difficulte == 1:
         colonnes_disponibles = [col for col in range(7) if colonne_valide(grille, col)]
         if colonnes_disponibles:
             colonne = choice(colonnes_disponibles)
@@ -206,7 +206,7 @@ def bot_puissance4(grille: list[list[str]], signe_actuel : str, difficulte: int)
 
 
     # Difficulté 1 : IA défensive/offensive simple
-    if difficulte == 1:
+    if difficulte == 2:
 
         # Vérifier si l'IA peut gagner avec verif_victoire_potentielle
         for colonne in range(7):
@@ -230,8 +230,10 @@ def bot_puissance4(grille: list[list[str]], signe_actuel : str, difficulte: int)
         # Si aucune colonne n'est valide
         print("Toutes les colonnes sont pleines !")
         return -1
+    
+    # Difficulté 3 : IA imbattable
+    return -1
 
-    return 1  # Valeur par défaut si aucune condition n'est remplie
 
 ############################################################
 
@@ -246,15 +248,15 @@ def simulationcoups(grille: list[list[str]], joueur: str, colonne: int) -> list[
         list[list[str]] : Grille de jeu après le coup simulé.
     """
     grille_copie = [ligne.copy() for ligne in grille]  # Copie de la grille
+    case_placee = False  # Variable pour savoir si un jeton a été placé
 
-    for i in range(0,7):  # Parcourt les lignes de la colonne choisie
-        if grille_copie[i][colonne] == " ":  # Si la case est vide
+    for i in range(5, -1, -1):  # Parcourt les lignes de la colonne choisie
+        if grille_copie[i][colonne] == " " and not case_placee:  # Si la case est vide et qu'un jeton n'a pas encore été placé
             grille_copie[i][colonne] = joueur  # Place le jeton du joueur
-            # Arrête la boucle
-            break
+            case_placee = True  # On marque qu'un jeton a été placé
 
     return grille_copie
-
+        
 # ──────────────────────────────────────────────────────────────
 #                FONCTION PRINCIPALE DU JEU
 # ──────────────────────────────────────────────────────────────
