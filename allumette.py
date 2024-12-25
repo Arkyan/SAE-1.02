@@ -1,6 +1,7 @@
 from fonction import *
 from time import sleep
 from random import randint
+from bot import *
 
 def affichage_Partie_Allumette(ResteAllumette : int, joueur_actuel : str) -> None:
     """
@@ -15,56 +16,6 @@ def affichage_Partie_Allumette(ResteAllumette : int, joueur_actuel : str) -> Non
     nombrelignehorizontale(1, 55)
     print(f"\033[92mIl reste {ResteAllumette} allumettes.\033[0m")
     print(f"C'est au tour de \033[0;36m{joueur_actuel}\033[0m de jouer.")
-
-####################################################################################################
-
-def bot_allumette(difficulte : int, nbr_allumette_restante : int) -> int :
-    """
-    Fonction pour le bot pour le jeu des allumettes.
-    Args:
-        difficulte (int): La difficulté du bot.
-        nbr_allumette_restante (int): Le nombre d'allumettes restantes.
-    Returns:
-        int: Le nombre d'allumettes à retirer.
-    """
-    nbr_allumettes_prise = 0
-
-    # Difficulté hasard (facile)
-    if difficulte == 1:
-        nbr_allumettes_prise = randint(1, 3)
-        print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-        return nbr_allumettes_prise
-    
-    # Difficulté entre-deux (intermédiaire)
-    elif difficulte == 2:
-        # Le bot prend parfois des décisions optimales, mais parfois il joue de manière aléatoire.
-        if randint(1, 10) <= 6:  # 60% de chance de jouer de manière optimale
-            # Stratégie partiellement optimale : amener l'adversaire dans une position perdante
-            nbr_allumettes_prise = (nbr_allumette_restante - 1) % 4
-            if nbr_allumettes_prise == 0:
-                # Si le bot ne peut pas appliquer la stratégie optimale, il joue au hasard
-                nbr_allumettes_prise = randint(1, 3)
-        else:
-            # 40% de chance de jouer au hasard (pour ajouter un peu de variabilité)
-            nbr_allumettes_prise = randint(1, 3)
-        
-        print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-        return nbr_allumettes_prise
-
-    # Difficulté maximum (imbattable)
-    else:
-        # Stratégie optimale (imbattable) : Toujours amener l'adversaire dans une position perdante.
-        if nbr_allumette_restante % 4 == 1:
-            # Si on est déjà dans une position perdante, on joue au hasard
-            nbr_allumettes_prise = randint(1, 3) if nbr_allumette_restante > 3 else nbr_allumette_restante
-        else:
-            # Calculer le nombre d'allumettes à prendre pour laisser un multiple de 4 + 1
-            nbr_allumettes_prise = (nbr_allumette_restante - 1) % 4
-            if nbr_allumettes_prise == 0:
-                nbr_allumettes_prise = randint(1, 3)  # Si ce n'est pas possible, choisir au hasard
-
-        print(f"L'IA a pris {nbr_allumettes_prise} allumettes")
-        return nbr_allumettes_prise
 
 ####################################################################################################
 

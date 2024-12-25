@@ -3,6 +3,7 @@ from time import sleep
 from random import randint
 import getpass
 from typing import List
+from bot import *
 
 def saisie_nombremystere(intervalle: int, joueuractuel : str) -> int:
     """
@@ -32,120 +33,6 @@ def saisie_nombremystere(intervalle: int, joueuractuel : str) -> int:
         
     return nombremystere
 
-
-############################################################
-def bot_choix_intervalle(mode_jeu : int) -> int :
-
-    """
-    Fonction pour choisir l'intervalle de jeu pour le bot
-    Args:
-        mode_jeu (int): Le mode de jeu.
-    Returns:
-        int: L'intervalle de jeu.
-    """
-    intervalle : int
-    intervalle = 0
-
-    #Mode hasard
-    if mode_jeu == 1 :
-        intervalle = randint(1, 100)
-
-    #Mode entre-deux
-    if mode_jeu == 2 :
-        intervalle = randint(1, 1000)
-
-    #Mode dichotomie/complexe
-    if mode_jeu == 3 :
-        intervalle = randint(1, 10000)
-
-    return intervalle
-
-def bot_choix_nombremystere(intervalle : int) -> int :
-    """
-    Fonction pour choisir le nombre mystère pour le bot
-    Args:
-        intervalle (int): L'intervalle de jeu.
-    Returns:
-        int: Le nombre mystère.
-    """
-    nombremystere : int
-    nombremystere = randint(1, intervalle)
-
-    return nombremystere
-
-def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: int, borne_min: int, borne_max: int) -> int:
-    """
-    Fonction pour le bot pour la devinette.
-    Args:
-        difficulte (int): La difficulté du bot.
-        intervalle (int): L'intervalle initial de jeu.
-        retour_jeu (int): Le retour du jeu (0 : plus grand, 1 : plus petit).
-        nbr_prec (int): Le dernier nombre proposé par le bot.
-        borne_min (int): La borne minimale de l'intervalle.
-        borne_max (int): La borne maximale de l'intervalle.
-    Returns:
-        int: Le nombre donné par le bot.
-    """
-    from random import randint
-
-    valeur_renvoye: int
-
-    # Mode hasard
-    if difficulte == 1:
-        valeur_renvoye = randint(1, intervalle)
-        print(f"Le nombre donné par l'IA est {valeur_renvoye}")
-        return valeur_renvoye
-
-    # Mode entre-deux
-    elif difficulte == 2:
-        if retour_jeu == 1:  # Plus petit
-            borne_max = min(borne_max, nbr_prec - 1)
-        elif retour_jeu == 0:  # Plus grand
-            borne_min = max(borne_min, nbr_prec + 1)
-
-        valeur_renvoye = randint(borne_min, borne_max)
-        print(f"Le nombre donné par l'IA est {valeur_renvoye} (intervalle: [{borne_min}, {borne_max}])")
-        return valeur_renvoye
-
-    # Mode difficulté maximale
-    else:
-        if retour_jeu == 1:  # Plus petit
-            borne_max = min(borne_max, nbr_prec - 1)
-        elif retour_jeu == 0:  # Plus grand
-            borne_min = max(borne_min, nbr_prec + 1)
-
-        # Stratégie : Choisir un nombre biaisé dans la partie la plus "prometteuse"
-        inter = borne_max - borne_min + 1
-        if inter <= 4:
-            # Quand l'intervalle est petit, joue au hasard dans l'intervalle
-            valeur_renvoye = randint(borne_min, borne_max)
-        else:
-            # Priorisation biaisée : choisir un tiers supérieur de l'intervalle
-            tiers = inter // 3
-            if retour_jeu == 0:  # Si plus grand, privilégier la borne supérieure
-                valeur_renvoye = randint(borne_min + tiers * 2, borne_max)
-            else:  # Si plus petit, privilégier la borne inférieure
-                valeur_renvoye = randint(borne_min, borne_max - tiers)
-
-        print(f"Le nombre donné par l'IA est {valeur_renvoye} (intervalle: [{borne_min}, {borne_max}])")
-        return valeur_renvoye
-        
-def bot_reponse_intervalle_devinette(nbr_devine : int, nbr_reponse : int) -> int:
-    """
-    Fonction pour la réponse du bot pour la devinette.
-    Args:
-        nbr_devine (int): Le nombre deviné.
-        nbr_reponse (int): Le nombre mystère.
-    Returns:
-        int: La réponse du bot.
-    """
-    if nbr_devine < nbr_reponse :
-        return 0
-    elif nbr_devine > nbr_reponse :
-        return 1
-    else :
-        return 2
-    
 ##################################################################################################################
 ##################################################################################################################
 ##################################             DÉBUT             #################################################
@@ -172,7 +59,6 @@ def devinette():
 
     mode_jeu : int 
     difficulte : int
-    si_IA : int
 
     borne_min : int
     borne_max : int
@@ -267,13 +153,10 @@ def devinette():
 ############################################################
 ############################################################
 
-    #Début de la boucle de jeu
-    si_IA = siIA(listej)
-
 # ──────────────────────────────────────────────────────────────
 #                     MODE JOUEUR CONTRE JOUEUR
 # ──────────────────────────────────────────────────────────────
-    if si_IA == 0 :
+    if mode_jeu == 1 :
         intervalle = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, Choisissez l'intervalle de jeu entre 1 et n : ", int, "La valeur doit être un entier", 1, 100))
         nbrmystere = saisie_nombremystere(intervalle, joueur1)
         print("\033[F\033[K", end="") #Efface la ligne précédente pour ne pas afficher le nombre mystère
@@ -322,7 +205,7 @@ def devinette():
 # ──────────────────────────────────────────────────────────────
 #                MODE IA CONTRE JOUEUR
 # ──────────────────────────────────────────────────────────────
-    elif si_IA == 1 and joueur1 == "IA1" :
+    elif mode_jeu == 2 and joueur1 == "IA1" :
 
         intervalle = bot_choix_intervalle(difficulte)
         nbrmystere = bot_choix_nombremystere(intervalle)
@@ -364,7 +247,7 @@ def devinette():
 # ──────────────────────────────────────────────────────────────
 #            MODE JOUEUR CONTRE IA 
 # ──────────────────────────────────────────────────────────────
-    elif si_IA == 1 and joueur2 == "IA1" :
+    elif mode_jeu == 2 and joueur2 == "IA1" :
         intervalle = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, Choisissez l'intervalle de jeu entre 1 et n : ", int, "La valeur doit être un entier", 1, 100))
         nbrmystere = saisie_nombremystere(intervalle, joueur1)
         print(f"\033[0;36m{joueur1}\033[0m a choisi le nombre à deviner c'est à \033[0;36m{joueur2}\033[0m de jouer ! \n")
@@ -420,7 +303,7 @@ def devinette():
 #                MODE IA CONTRE IA
 # ──────────────────────────────────────────────────────────────
     #Mode IA contre IA
-    elif si_IA == 2 :
+    elif mode_jeu == 3 :
         intervalle = bot_choix_intervalle(difficulte)
         nbrmystere = bot_choix_nombremystere(intervalle)
         print(f"\033[0;36m{joueur1}\033[0m a choisi le nombre à deviner c'est à \033[0;36m{joueur2}\033[0m de jouer ! \n")

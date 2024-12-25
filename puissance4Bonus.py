@@ -2,6 +2,7 @@ from fonction import *
 from time import sleep
 from random import randint
 from random import choice
+from bot import *
 
 def plateau(grille: list[list[str]]) -> None:
     """
@@ -18,8 +19,6 @@ def plateau(grille: list[list[str]]) -> None:
         print("|".join(f" {case} " for case in ligne), end="")  # Affiche les cases
         print("|")  # Fin de la ligne
         print("+" + "---+" * 7)  # Ligne de séparation
-
-
 
 ############################################################
 ############################################################
@@ -128,33 +127,6 @@ def verif_victoire(grille: list[list[str]], signe_actuel : str) -> bool:
                 return True
 
     return False
-
-
-def verif_victoire_potentielle(grille: list[list[str]], signe_actuel : str, colonne: int) -> bool:
-    """
-    Vérifie si un joueur peut gagner en jouant dans une colonne donnée.
-    Args:
-        grille (list[list[str]]): Grille de jeu.
-        joueur (str): Jeton du joueur ("X" ou "O").
-        colonne (int): Colonne dans laquelle le joueur joue hypothétiquement.
-    Returns:
-        bool: True si jouer dans cette colonne mène à une victoire, sinon False.
-    """
-    if not (0 <= colonne < 7):  # Vérifie que la colonne est valide
-        return False
-
-    # Trouver la première ligne vide dans cette colonne
-    for ligne in range(5, -1, -1):  # Parcourt les lignes de bas en haut
-        if grille[ligne][colonne] == " ":  # Si la case est vide
-            # Simuler le coup
-            grille[ligne][colonne] = signe_actuel
-            victoire = verif_victoire(grille, signe_actuel)  # Vérifie la victoire
-            # Annuler le coup
-            grille[ligne][colonne] = " "
-            return victoire
-
-    return False  # Si la colonne est pleine
-
 # ──────────────────────────────────────────────────────────────
 #                     BOT PUISSANCE 4
 # ──────────────────────────────────────────────────────────────
