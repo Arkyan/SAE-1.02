@@ -203,7 +203,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                 coord[0] = randint(0, 2)
                 coord[1] = randint(0, 2)
             grille[coord[0]][coord[1]] = "O"
-            print("Le bot a joué en ", coord[0], coord[1])
+            print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
             return grille
         else :
             coord[0] = randint(0, 2)
@@ -212,7 +212,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                 coord[0] = randint(0, 2)
                 coord[1] = randint(0, 2)
             grille[coord[0]][coord[1]] = "X"
-            print("Le bot a joué en ", coord[0], coord[1])
+            print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
             return grille
         
     elif difficulte == 2 :
@@ -225,7 +225,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                     coord[0] = randint(0, 2)
                     coord[1] = randint(0, 2)
                 grille[coord[0]][coord[1]] = "O"
-                print("Le bot a joué en ", coord[0], coord[1])
+                print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
                 return grille
             else :
                 coord[0] = randint(0, 2)
@@ -234,7 +234,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                     coord[0] = randint(0, 2)
                     coord[1] = randint(0, 2)
                 grille[coord[0]][coord[1]] = "X"
-                print("Le bot a joué en ", coord[0], coord[1])
+                print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
                 return grille
         else :
             if jeu == 1 :
@@ -245,7 +245,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                             grille[i][j] = "O"
                             if check_victory(grille, "O"):
                                 grille[i][j] = "O"
-                                print("Le bot a joué en ", i,j)
+                                print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                                 return grille
                             grille[i][j] = " "
 
@@ -256,7 +256,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                             grille[i][j] = "X"
                             if check_victory(grille, "X"):
                                 grille[i][j] = "O"
-                                print("Le bot a joué en ", i,j)
+                                print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                                 return grille
                             grille[i][j] = " "
 
@@ -276,7 +276,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                             grille[i][j] = "X"
                             if check_victory(grille, "X"):
                                 grille[i][j] = "X"
-                                print("Le bot a joué en ", i,j)
+                                print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                                 return grille
                             grille[i][j] = " "
 
@@ -287,7 +287,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                             grille[i][j] = "O"
                             if check_victory(grille, "O"):
                                 grille[i][j] = "X"
-                                print("Le bot a joué en ", i,j)
+                                print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                                 return grille
                             grille[i][j] = " "
 
@@ -306,7 +306,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                         grille[i][j] = "O"
                         if check_victory(grille, "O"):
                             grille[i][j] = "O"
-                            print("Le bot a joué en ", i,j)
+                            print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                             return grille
                         grille[i][j] = " "
 
@@ -317,7 +317,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                         grille[i][j] = "X"
                         if check_victory(grille, "X"):
                             grille[i][j] = "O"
-                            print("Le bot a joué en ", i,j)
+                            print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                             return grille
                         grille[i][j] = " "
 
@@ -338,7 +338,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                         grille[i][j] = "X"
                         if check_victory(grille, "X"):
                             grille[i][j] = "X"
-                            print("Le bot a joué en ", i,j)
+                            print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                             return grille
                         grille[i][j] = " "
 
@@ -349,7 +349,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                         grille[i][j] = "O"
                         if check_victory(grille, "O"):
                             grille[i][j] = "X"
-                            print("Le bot a joué en ", i,j)
+                            print(f"Le bot a joué en ligne {i+1} et colonne {j+1}")
                             return grille
                         grille[i][j] = " "
 
