@@ -1,7 +1,6 @@
 from fonction import *
 from time import sleep
 from random import randint
-from random import choice
 from bot import *
 
 def plateau(grille: list[list[str]]) -> None:
@@ -144,90 +143,6 @@ def colonnes_possibles(grille: list[list[str]]) -> list[int]:
         if not colonne_pleine(grille, colonne):
             colonnes.append(colonne)
     return colonnes
-
-############################################################
-
-def bot_puissance4(grille: list[list[str]], signe_actuel : str, difficulte: int) -> int:
-    """
-    Fonction qui permet à l'IA de choisir une colonne pour jouer.
-    Args:
-        grille (list[list[str]]): Grille de jeu.
-        joueur (str): Joueur actuel.
-        difficulte (int): Difficulté de l'IA.
-    Returns:
-        int : Colonne choisie par l'IA.
-    """
-    def colonne_valide(grille: list[list[str]], colonne: int) -> bool:
-        """Vérifie si une colonne n'est pas pleine."""
-        return grille[0][colonne] == " "
-
-    if signe_actuel == "\033[33m■\033[0m" :
-        adversaire = "\033[31m■\033[0m"
-    else:
-        adversaire = "\033[33m■\033[0m"
-
-    # Mode aléatoire
-    if difficulte == 1:
-        colonnes_disponibles = [col for col in range(7) if colonne_valide(grille, col)]
-        if colonnes_disponibles:
-            colonne = choice(colonnes_disponibles)
-            print(f"L'IA ({signe_actuel}) choisit la colonne {colonne+1}")
-            return colonne
-        print("Toutes les colonnes sont pleines !")
-        return -1
-
-
-    # Difficulté 1 : IA défensive/offensive simple
-    if difficulte == 2:
-
-        # Vérifier si l'IA peut gagner avec verif_victoire_potentielle
-        for colonne in range(7):
-            if verif_victoire_potentielle(grille, signe_actuel, colonne):
-                print(f"L'IA ({signe_actuel}) joue la colonne {colonne+1} pour gagner")
-                return colonne
-            
-        # Vérifier si le joueur peut gagner avec verif_victoire_potentielle
-        for colonne in range(7):
-            if verif_victoire_potentielle(grille, adversaire, colonne):
-                print(f"L'IA ({signe_actuel}) bloque la colonne {colonne+1}")
-                return colonne
-        
-        # Sinon, choisir une colonne aléatoire parmi les valides
-        colonnes_disponibles = [col for col in range(7) if colonne_valide(grille, col)]
-        if colonnes_disponibles:
-            colonne = choice(colonnes_disponibles)
-            print(f"L'IA ({signe_actuel}) choisit aléaoirement la colonne {colonne+1}")
-            return colonne
-        
-        # Si aucune colonne n'est valide
-        print("Toutes les colonnes sont pleines !")
-        return -1
-    
-    # Difficulté 3 : IA imbattable
-    return -1
-
-
-############################################################
-
-def simulationcoups(grille: list[list[str]], joueur: str, colonne: int) -> list[list[str]]:
-    """
-    Simule un coup pour l'IA.
-    Args:
-        grille (list[list[str]]): Grille de jeu.
-        joueur (str): Joueur actuel.
-        colonne (int): Colonne choisie par l'IA.
-    Returns:
-        list[list[str]] : Grille de jeu après le coup simulé.
-    """
-    grille_copie = [ligne.copy() for ligne in grille]  # Copie de la grille
-    case_placee = False  # Variable pour savoir si un jeton a été placé
-
-    for i in range(5, -1, -1):  # Parcourt les lignes de la colonne choisie
-        if grille_copie[i][colonne] == " " and not case_placee:  # Si la case est vide et qu'un jeton n'a pas encore été placé
-            grille_copie[i][colonne] = joueur  # Place le jeton du joueur
-            case_placee = True  # On marque qu'un jeton a été placé
-
-    return grille_copie
         
 # ──────────────────────────────────────────────────────────────
 #                FONCTION PRINCIPALE DU JEU
@@ -430,9 +345,9 @@ def puissance4() -> None:
 #                MODE IA CONTRE IA
 # ──────────────────────────────────────────────────────────────
     elif mode_jeu == 3 :
+
         while not victoire and not plein:
             plateau(grille)
-
             colonne = bot_puissance4(grille, signe_actuel, difficulte)
             sleep(2)
 
