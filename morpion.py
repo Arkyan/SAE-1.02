@@ -567,6 +567,7 @@ def morpionjouer() :
                 else :
                     
                     bot_morpion(difficulte, mat, j)
+                    sleep(2)
                     effacer_console()
                     afficher_jeu()
                     afficher_morpion(mat)
@@ -792,231 +793,17 @@ def morpionjouer() :
 #                MODE IA CONTRE IA
 # ──────────────────────────────────────────────────────────────
     elif mode_jeu == 3 :
-        if  j == 1 :
-            humain = True
+            j = 1
             while (cond_vic1 == False) and (cond_vic2 == False) and (not(morpion_plein(mat))) :
-
-                #le joueur humain joue
-                if humain :
-
-                    jeu_morpion1(mat, joueur1)
-                    effacer_console()
-                    afficher_jeu()
-                    afficher_morpion(mat)
-
-
-                    #Vérifie si une colonne est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][n_ligne_col] == 'X' :
-                                #Incrémente le compteur servant à vérifier si la colonne est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        #Incrémente le numéro de la colonne
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine colonne
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si une ligne est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[n_ligne_col][i] == 'X' :
-                                #Incrémente le compteur servant à vérifier si la ligne est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        #Incrémente le numéro de la ligne
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine ligne
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si la diagonale principale est remplie 
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][i] == 'X':
-                                #Incrémente le compteur servant à vérifier si la diagonale principale est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine diagonale principale
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si la diagonale opposée est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][-i-1] == 'X' :
-                                #Incrémente le compteur servant à vérifier si la diagonale opposée est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine diagonale opposée
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification(qui sera pour le joueur 2)
-                    n_ligne_col = 0
-
-                    #Changement de joueur
-                    humain = False
-
-                else :
-                    bot_morpion(difficulte, mat, j)
-                    effacer_console()
-                    afficher_jeu()
-                    afficher_morpion(mat)
-                    
-                    #Vérifie si une colonne est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][n_ligne_col] == 'O' :
-                                #Incrémente le compteur servant à vérifier si la colonne est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        #Incrémente le numéro de la colonne
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine colonne
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si une ligne est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[n_ligne_col][i] == 'O' :
-                                #Incrémente le compteur servant à vérifier si la ligne est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        #Incrémente le numéro de la ligne
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine ligne
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si la diagonale principale est remplie 
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][i] == 'O':
-                                #Incrémente le compteur servant à vérifier si la diagonale principale est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine diagonale principale
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si la diagonale opposée est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][-i-1] == 'O' :
-                                #Incrémente le compteur servant à vérifier si la diagonale opposée est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine diagonale opposée
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification(qui sera pour le joueur 2)
-                    n_ligne_col = 0
-                    
-                    humain = True
-        else : 
-            humain = False
-            while (cond_vic1 == False) and (cond_vic2 == False) and (not(morpion_plein(mat))) :
-
-                #le joueur humain joue
-                if humain :
-
-                    jeu_morpion2(mat, joueur1)
-                    effacer_console()
-                    afficher_jeu()
-                    afficher_morpion(mat)
-
-
-                    #Vérifie si une colonne est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][n_ligne_col] == 'O' :
-                                #Incrémente le compteur servant à vérifier si la colonne est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        #Incrémente le numéro de la colonne
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine colonne
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si une ligne est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[n_ligne_col][i] == 'O' :
-                                #Incrémente le compteur servant à vérifier si la ligne est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        #Incrémente le numéro de la ligne
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine ligne
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-                    
-                    #Vérifie si la diagonale principale est remplie 
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][i] == 'O':
-                                #Incrémente le compteur servant à vérifier si la diagonale principale est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine diagonale principale
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification
-                    n_ligne_col = 0
-
-
-                    #Vérifie si la diagonale opposée est remplie
-                    while n_ligne_col < len(mat) :
-                        for i in range(len(mat)) :
-                            if mat[i][-i-1] == 'O' :
-                                #Incrémente le compteur servant à vérifier si la diagonale opposée est remplie complètement
-                                compteur = compteur + 1
-                                if compteur == len(mat) :
-                                    cond_vic1 = True
-                        n_ligne_col = n_ligne_col + 1
-                        #Réinitialise le compteur pour la prochaine diagonale opposée
-                        compteur = 0
-                    #Réinitialise la variable pour la prochaine vérification(qui sera pour le joueur 2)
-                    n_ligne_col = 0
-                    
-                    #change de joueur
-                    humain = False
                 
-                else :
-                    
-                    bot_morpion(difficulte, mat, j)
-                    
+                if j == 1 :
+                    bot_morpion(difficulte, mat, 2)
+                    sleep(2)
+                    effacer_console()
+                    afficher_jeu()
+                    afficher_morpion(mat)
+
+
                     #Vérifie si une colonne est remplie
                     while n_ligne_col < len(mat) :
                         for i in range(len(mat)) :
@@ -1078,7 +865,86 @@ def morpionjouer() :
                     #Réinitialise la variable pour la prochaine vérification(qui sera pour le joueur 2)
                     n_ligne_col = 0
                     
-                    humain = True
+                    j = 2
+                
+                else :    
+                    
+                    bot_morpion(difficulte, mat, 1)
+                    sleep(2)
+                    effacer_console()
+                    afficher_jeu()
+                    afficher_morpion(mat)
+                    
+                    #Vérifie si une colonne est remplie
+                    while n_ligne_col < len(mat) :
+                        for i in range(len(mat)) :
+                            if mat[i][n_ligne_col] == 'O' :
+                                #Incrémente le compteur servant à vérifier si la colonne est remplie complètement
+                                compteur = compteur + 1
+                                if compteur == len(mat) :
+                                    cond_vic2 = True
+                        #Incrémente le numéro de la colonne
+                        n_ligne_col = n_ligne_col + 1
+                        #Réinitialise le compteur pour la prochaine colonne
+                        compteur = 0
+                    #Réinitialise la variable pour la prochaine vérification
+                    n_ligne_col = 0
+
+
+                    #Vérifie si une ligne est remplie
+                    while n_ligne_col < len(mat) :
+                        for i in range(len(mat)) :
+                            if mat[n_ligne_col][i] == 'O' :
+                                #Incrémente le compteur servant à vérifier si la ligne est remplie complètement
+                                compteur = compteur + 1
+                                if compteur == len(mat) :
+                                    cond_vic2 = True
+                        #Incrémente le numéro de la ligne
+                        n_ligne_col = n_ligne_col + 1
+                        #Réinitialise le compteur pour la prochaine ligne
+                        compteur = 0
+                    #Réinitialise la variable pour la prochaine vérification
+                    n_ligne_col = 0
+
+
+                    #Vérifie si la diagonale principale est remplie 
+                    while n_ligne_col < len(mat) :
+                        for i in range(len(mat)) :
+                            if mat[i][i] == 'O':
+                                #Incrémente le compteur servant à vérifier si la diagonale principale est remplie complètement
+                                compteur = compteur + 1
+                                if compteur == len(mat) :
+                                    cond_vic2 = True
+                        n_ligne_col = n_ligne_col + 1
+                        #Réinitialise le compteur pour la prochaine diagonale principale
+                        compteur = 0
+                    #Réinitialise la variable pour la prochaine vérification
+                    n_ligne_col = 0
+
+
+                    #Vérifie si la diagonale opposée est remplie
+                    while n_ligne_col < len(mat) :
+                        for i in range(len(mat)) :
+                            if mat[i][-i-1] == 'O' :
+                                #Incrémente le compteur servant à vérifier si la diagonale opposée est remplie complètement
+                                compteur = compteur + 1
+                                if compteur == len(mat) :
+                                    cond_vic2 = True
+                        n_ligne_col = n_ligne_col + 1
+                        #Réinitialise le compteur pour la prochaine diagonale opposée
+                        compteur = 0
+                    #Réinitialise la variable pour la prochaine vérification(qui sera pour le joueur 2)
+                    n_ligne_col = 0
+                    
+                    j = 1
+        
+    if cond_vic1 :
+        print(f"{joueur1} a gagné")
+    elif cond_vic2 :
+        print(f"{joueur2} a gagné")
+    else :
+        print("Match nul")           
+    
 
 
 # ──────────────────────────────────────────────────────────────
