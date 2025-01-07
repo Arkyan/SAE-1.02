@@ -296,6 +296,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                     coord[0] = randint(0, 2)
                     coord[1] = randint(0, 2)
                 grille[coord[0]][coord[1]] = "X"
+                print(coord[0], coord[1])
                 return grille
     else:
         if jeu == 1 :
@@ -328,6 +329,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                 coord[0] = randint(0, 2)
                 coord[1] = randint(0, 2)
             grille[coord[0]][coord[1]] = "O"
+            print(coord[0], coord[1])
             return grille
         
         else :
