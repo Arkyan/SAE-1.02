@@ -795,9 +795,10 @@ def morpionjouer() :
     elif mode_jeu == 3 :
             j = 1
             while (cond_vic1 == False) and (cond_vic2 == False) and (not(morpion_plein(mat))) :
-                
                 if j == 1 :
+
                     bot_morpion(difficulte, mat, 2)
+
                     sleep(2)
                     effacer_console()
                     afficher_jeu()
@@ -870,6 +871,7 @@ def morpionjouer() :
                 else :    
                     
                     bot_morpion(difficulte, mat, 1)
+
                     sleep(2)
                     effacer_console()
                     afficher_jeu()
@@ -950,5 +952,6 @@ def morpionjouer() :
 # ──────────────────────────────────────────────────────────────
 #                AFFICHAGE FINAL
 # ──────────────────────────────────────────────────────────────
+
     afficher_scores_final("morpion")
     quitterjeux("morpion")
