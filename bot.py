@@ -267,6 +267,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                     coord[0] = randint(0, 2)
                     coord[1] = randint(0, 2)
                 grille[coord[0]][coord[1]] = "O"
+                print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
                 return grille
             else :
                 #Regarde si le bot peut gagner au prochain tour
@@ -296,7 +297,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                     coord[0] = randint(0, 2)
                     coord[1] = randint(0, 2)
                 grille[coord[0]][coord[1]] = "X"
-                print(coord[0], coord[1])
+                print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
                 return grille
     else:
         if jeu == 1 :
@@ -329,7 +330,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                 coord[0] = randint(0, 2)
                 coord[1] = randint(0, 2)
             grille[coord[0]][coord[1]] = "O"
-            print(coord[0], coord[1])
+            print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
             return grille
         
         else :
@@ -362,7 +363,7 @@ def bot_morpion(difficulte : int, grille : list[list[str]], jeu : int) -> list[l
                 coord[0] = randint(0, 2)
                 coord[1] = randint(0, 2)
             grille[coord[0]][coord[1]] = "X"
-            print(coord[0], coord[1])
+            print(f"Le bot a joué en ligne {coord[0]+1} et colonne {coord[1]+1}")
             return grille  
                
 ############################################################################################################
