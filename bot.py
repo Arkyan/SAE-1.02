@@ -8,12 +8,12 @@ from random import randint
 # ──────────────────────────────────────────────────────────────
 ############################################################################################################
 
-def bot_choix_intervalle(mode_jeu : int) -> int :
+def bot_choix_intervalle(difficulte : int) -> int :
 
     """
     Fonction pour faire choisir un intervalle par le bot.
     Args:
-        mode_jeu (int): Le mode de jeu.
+        difficulte (int): Le mode de jeu.
     Returns:
         int: L'intervalle de jeu.
     """
@@ -21,15 +21,15 @@ def bot_choix_intervalle(mode_jeu : int) -> int :
     intervalle = 0
 
     #Mode hasard
-    if mode_jeu == 1 :
+    if difficulte == 1 :
         intervalle = randint(1, 100)
 
     #Mode entre-deux
-    if mode_jeu == 2 :
+    if difficulte == 2 :
         intervalle = randint(1, 1000)
 
     #Mode dichotomie/complexe
-    if mode_jeu == 3 :
+    if difficulte == 3 :
         intervalle = randint(1, 10000)
 
     return intervalle
@@ -72,9 +72,9 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
 
     # Mode entre-deux
     elif difficulte == 2:
-        if retour_jeu == 1:  # Plus petit
+        if retour_jeu == 2:  # Si le joueur a répond que le nombre est plus petit
             borne_max = min(borne_max, nbr_prec - 1)
-        elif retour_jeu == 0:  # Plus grand
+        elif retour_jeu == 1: # Si le joueur a répond que le nombre est plus grand
             borne_min = max(borne_min, nbr_prec + 1)
 
         valeur_renvoye = randint(borne_min, borne_max)
@@ -83,9 +83,9 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
 
     # Mode difficulté maximale
     else:
-        if retour_jeu == 1:  # Plus petit
+        if retour_jeu == 2:  # Plus petit
             borne_max = min(borne_max, nbr_prec - 1)
-        elif retour_jeu == 0:  # Plus grand
+        elif retour_jeu == 1:  # Plus grand
             borne_min = max(borne_min, nbr_prec + 1)
 
         # Stratégie : Choisir un nombre biaisé dans la partie la plus "prometteuse"

@@ -183,7 +183,7 @@ def bot_puissance4(grille: list[list[str]], signe_actuel : str, difficulte: int)
         # Vérifier si l'IA peut gagner avec verif_victoire_potentielle
         for colonne in range(7):
             if verif_victoire_potentielle(grille, signe_actuel, colonne):
-                print(f"L'IA ({signe_actuel}) joue ici pour gagner la colonne {colonne+1}")
+                print(f"L'IA ({signe_actuel}) joue la colonne {colonne+1} pour gagner")
                 return colonne
             
         # Vérifier si le joueur peut gagner avec verif_victoire_potentielle

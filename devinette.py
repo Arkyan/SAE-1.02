@@ -169,18 +169,18 @@ def devinette():
             nbrdevine = int(inputCustom(f"\033[0;36m{joueur2}\033[0m, quel est le nombre ? ", int, "La valeur doit être un entier", 1, intervalle))
             listecoup.append(nbrdevine)
             menu("devinette")
-            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
             print("\033[F\033[K", end="")
 
             # Le joueur 1 répond
-            if valeur == 2 and nbrdevine != nbrmystere :
+            if valeur == 3 and nbrdevine != nbrmystere :
                 print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
-                while valeur == 2 and nbrdevine != nbrmystere :
-                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+                while valeur == 3 and nbrdevine != nbrmystere :
+                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
 
-            if valeur == 0:
-                print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
             if valeur == 1:
+                print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+            if valeur == 2:
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
 
             # Si le nombre n'a pas été trouvé en compteur_max tours
@@ -195,7 +195,7 @@ def devinette():
                 enregistrer_score_binaire("devinette", joueur1, 1)
 
             # Si le joueur 2 trouve le bon nombre
-            if valeur == 2 and nbrdevine == nbrmystere :
+            if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
@@ -222,9 +222,9 @@ def devinette():
             listecoup.append(nbrdevine)
             valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
 
-            if valeur == 0:
-                print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
             if valeur == 1:
+                print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+            if valeur == 2:
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
 
             # Si le nombre n'a pas été trouvé en compteur_max tours
@@ -238,7 +238,7 @@ def devinette():
                 print(f"Pas de score pour l'IA")
             
             # Si le joueur 2 trouve le bon nombre
-            if valeur == 2 and nbrdevine == nbrmystere :
+            if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
@@ -262,22 +262,22 @@ def devinette():
             sleep(3)
             effacer_console()
 
-            # Le joueur 2 fait une supposition
+            # Le bot fait une supposition
             nbrdevine = bot_devinnette(difficulte, intervalle, valeur, nbrdevine, borne_min, borne_max)
 
             listecoup.append(nbrdevine)
             menu("devinette")
-            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
 
-            # Le joueur 1 répond
-            if valeur == 2 and nbrdevine != nbrmystere:
+            # Le joueur répond
+            if valeur == 3 and nbrdevine != nbrmystere:
                 print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
                 while valeur == 2 and nbrdevine != nbrmystere:
-                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
-            if valeur == 0:  # Plus grand
+                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+            if valeur == 1:  # Plus grand
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
                 borne_min = max(borne_min, nbrdevine + 1)  # Mise à jour de la borne minimale
-            if valeur == 1:  # Plus petit
+            if valeur == 2:  # Plus petit
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
                 borne_max = min(borne_max, nbrdevine - 1)  # Mise à jour de la borne maximale
             
@@ -293,7 +293,7 @@ def devinette():
                 enregistrer_score_binaire("devinette", joueur1, 1)
                 
             # Si le joueur 2 trouve le bon nombre
-            if valeur == 2 and nbrdevine == nbrmystere :
+            if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
@@ -324,14 +324,10 @@ def devinette():
             valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
 
             # Le joueur 1 répond
-            if valeur == 2 and nbrdevine != nbrmystere:
-                print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
-                while valeur == 2 and nbrdevine != nbrmystere:
-                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 0 / 1 / 2 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
-            if valeur == 0:  # Plus grand
+            if valeur == 1:  # Plus grand
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
                 borne_min = max(borne_min, nbrdevine + 1)  # Mise à jour de la borne minimale
-            if valeur == 1:  # Plus petit
+            if valeur == 2:  # Plus petit
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
                 borne_max = min(borne_max, nbrdevine - 1)  # Mise à jour de la borne maximale
 
@@ -349,7 +345,7 @@ def devinette():
                 gagner = True
 
             # Si le joueur 2 trouve le bon nombre
-            if valeur == 2 and nbrdevine == nbrmystere :
+            if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
