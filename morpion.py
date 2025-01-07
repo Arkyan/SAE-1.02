@@ -212,7 +212,7 @@ def deja_pris(mat : list[list[str]], l : int, c : int) -> bool :
 ############################################################################################################
 ############################################################################################################
     
-def morpionjouer() -> None :
+def morpionjouer() :
     cond_vic1 : bool
     cond_vic2 : bool
     humain : bool
@@ -315,10 +315,12 @@ def morpionjouer() -> None :
 
 
 # ──────────────────────────────────────────────────────────────
-#                DÉROULEMENT DU JEU
+#                BOUCLE PRINCIPALE DU JEU
 # ──────────────────────────────────────────────────────────────
 
-    #MODE JOUEUR CONTRE JOUEUR
+# ──────────────────────────────────────────────────────────────
+#                MODE JOUEUR CONTRE JOUEUR
+# ──────────────────────────────────────────────────────────────
     if mode_jeu == 1 :
         while ((cond_vic1 == False) and (cond_vic2 == False) and (not(morpion_plein(mat)))) : 
             #le joueur 1 joue
@@ -481,7 +483,10 @@ def morpionjouer() -> None :
         else :
             print("Match nul")
 
-    #MODE JOUEUR CONTRE IA
+
+# ──────────────────────────────────────────────────────────────
+#                MODE JOUEUR CONTRE IA
+# ──────────────────────────────────────────────────────────────
     elif mode_jeu == 2 :
         if j == 1 :
             humain = True
@@ -782,7 +787,10 @@ def morpionjouer() -> None :
         else :
             print("Match nul")
 
-    #MODE IA CONTRE IA
+
+# ──────────────────────────────────────────────────────────────
+#                MODE IA CONTRE IA
+# ──────────────────────────────────────────────────────────────
     elif mode_jeu == 3 :
         if  j == 1 :
             humain = True
@@ -1072,6 +1080,9 @@ def morpionjouer() -> None :
                     
                     humain = True
 
-    #Affichage de fin
+
+# ──────────────────────────────────────────────────────────────
+#                AFFICHAGE FINAL
+# ──────────────────────────────────────────────────────────────
     afficher_scores_final("morpion")
     quitterjeux("morpion")

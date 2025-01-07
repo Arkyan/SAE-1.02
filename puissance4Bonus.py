@@ -126,9 +126,9 @@ def verif_victoire(grille: list[list[str]], signe_actuel : str) -> bool:
                 return True
 
     return False
-# ──────────────────────────────────────────────────────────────
-#                     BOT PUISSANCE 4
-# ──────────────────────────────────────────────────────────────
+
+############################################################
+
 def colonnes_possibles(grille: list[list[str]]) -> list[int]:
     """
     Retourne les colonnes où il est possible de jouer.
@@ -172,6 +172,7 @@ def puissance4() -> None:
         difficulte = 0
     else :
         difficulte = choix_difficulte()
+
 
 # ──────────────────────────────────────────────────────────────
 #                ASSIGNATION DES JOUEURS AU HASARD
