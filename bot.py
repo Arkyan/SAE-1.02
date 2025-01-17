@@ -114,11 +114,13 @@ def bot_reponse_intervalle_devinette(nbr_devine : int, nbr_reponse : int) -> int
         int: La réponse du bot.
     """
     if nbr_devine < nbr_reponse :
-        return 0
-    elif nbr_devine > nbr_reponse :
         return 1
-    else :
+    elif nbr_devine > nbr_reponse :
         return 2
+    elif nbr_devine == nbr_reponse :
+        return 3
+    else :
+        return 0
     
 ############################################################################################################    
 # ──────────────────────────────────────────────────────────────

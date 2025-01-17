@@ -169,9 +169,12 @@ def puissance4() -> None:
     mode_jeu = choix_mode_jeu()
     if mode_jeu == 1 :
         print("Vous avez choisi le mode Joueur contre Joueur")
-        difficulte = 0
+        difficulte = 1
     else :
         difficulte = choix_difficulte()
+        while difficulte == 3 :
+            print("La difficulté 3 n'est pas disponible pour le jeu puissance 4")
+            difficulte = choix_difficulte()
 
 
 # ──────────────────────────────────────────────────────────────

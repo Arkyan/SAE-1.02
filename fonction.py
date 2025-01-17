@@ -614,6 +614,7 @@ def choix_mode_jeu() -> int:
     switch(liste_mode)
     mode = int(inputCustom("\033[33mEntrez le numéro correspondant au mode de jeu choisi : \033[0m", int, "La valeur doit être un entier", 1, 3))
     print(f"Mode de jeu choisi : {liste_mode[mode - 1]}")
+    sleep(1)
 
     return mode
 

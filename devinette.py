@@ -66,6 +66,9 @@ def devinette():
     listecoup : List[int] 
     listecoup = []
 
+    listecoupreponse : List[str]
+    listecoupreponse = []
+
     gagner = False
     Sicompteur : str
     compteur : int
@@ -169,19 +172,23 @@ def devinette():
             nbrdevine = int(inputCustom(f"\033[0;36m{joueur2}\033[0m, quel est le nombre ? ", int, "La valeur doit être un entier", 1, intervalle))
             listecoup.append(nbrdevine)
             menu("devinette")
-            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+
+            #Réponse du joueur 1
+            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 1, 3))
             print("\033[F\033[K", end="")
 
             # Le joueur 1 répond
             if valeur == 3 and nbrdevine != nbrmystere :
                 print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
                 while valeur == 3 and nbrdevine != nbrmystere :
-                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 1, 3))
 
             if valeur == 1:
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+                listecoupreponse.append("Plus grand")
             if valeur == 2:
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
+                listecoupreponse.append("Plus petit")
 
             # Si le nombre n'a pas été trouvé en compteur_max tours
             if Sicompteur == "Oui" :
@@ -223,8 +230,10 @@ def devinette():
             valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
 
             if valeur == 1:
+                listecoupreponse.append("Plus grand")
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
             if valeur == 2:
+                listecoupreponse.append("Plus petit")
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
 
             # Si le nombre n'a pas été trouvé en compteur_max tours
@@ -240,6 +249,7 @@ def devinette():
             # Si le joueur 2 trouve le bon nombre
             if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
+                listecoupreponse.append("Trouvé")
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
                 enregistrer_score_binaire("devinette", joueur2, 1)
@@ -267,18 +277,20 @@ def devinette():
 
             listecoup.append(nbrdevine)
             menu("devinette")
-            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+            valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 : ", int, "La valeur doit être un 0, 1 ou 2", 1, 3))
 
             # Le joueur répond
             if valeur == 3 and nbrdevine != nbrmystere:
                 print(f"Vous ne pouvez pas dire que le nombre est trouvé si ce n'est pas le bon nombre !")
                 while valeur == 2 and nbrdevine != nbrmystere:
-                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 ", int, "La valeur doit être un 0, 1 ou 2", 0, 2))
+                    valeur = int(inputCustom(f"\033[0;36m{joueur1}\033[0m, votre choix 1 / 2 / 3 ", int, "La valeur doit être un 0, 1 ou 2", 1, 3))
             if valeur == 1:  # Plus grand
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+                listecoupreponse.append("Plus grand")
                 borne_min = max(borne_min, nbrdevine + 1)  # Mise à jour de la borne minimale
             if valeur == 2:  # Plus petit
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
+                listecoupreponse.append("Plus petit")
                 borne_max = min(borne_max, nbrdevine - 1)  # Mise à jour de la borne maximale
             
             # Si le nombre n'a pas été trouvé en compteur_max tours
@@ -295,6 +307,7 @@ def devinette():
             # Si le joueur 2 trouve le bon nombre
             if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
+                listecoupreponse.append("Trouvé")
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
                 print("Pas de score pour l'IA")
@@ -319,18 +332,24 @@ def devinette():
 
             # Le joueur 2 fait une supposition
             nbrdevine = bot_devinnette(difficulte, intervalle, valeur, nbrdevine, borne_min, borne_max)
+            sleep(1)
 
             listecoup.append(nbrdevine)
+
             valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
+
 
             # Le joueur 1 répond
             if valeur == 1:  # Plus grand
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus grand\033[0m")
+                listecoupreponse.append("Plus grand")
                 borne_min = max(borne_min, nbrdevine + 1)  # Mise à jour de la borne minimale
             if valeur == 2:  # Plus petit
                 print(f"Le nombre à deviner n'est pas {nbrdevine} !\033[1m\033[31m Il est plus petit\033[0m")
+                listecoupreponse.append("Plus petit")
                 borne_max = min(borne_max, nbrdevine - 1)  # Mise à jour de la borne maximale
 
+            sleep(1)
             # Si le nombre n'a pas été trouvé en compteur_max tours
             if Sicompteur == "Oui" :
                 compteur += 1
@@ -347,6 +366,7 @@ def devinette():
             # Si le joueur 2 trouve le bon nombre
             if valeur == 3 and nbrdevine == nbrmystere :
                 effacer_console()
+                listecoupreponse.append("Trouvé")
                 print(f"Bravo {joueur2}, vous avez trouvé le nombre à deviner ! Le nombre à deviner était bien {nbrmystere} !")
                 gagner = True
                 print("Pas de score pour l'IA")
@@ -362,10 +382,12 @@ def devinette():
 # ──────────────────────────────────────────────────────────────
 
     #Affichage des coups
-    print()
-    for i in range(len(listecoup)) :
-        print(f"Tour n°{i+1} : {listecoup[i]}")
-    print()
+    demande_affichage = str(inputCustom("Voulez-vous afficher les coups joués ? (Oui/Non) : ", str, "La valeur doit être un caractère")).capitalize()
+    if demande_affichage == "Oui" :
+        print()
+        for i in range(len(listecoupreponse)) :
+            print(f"Tour n°{i+1} : {listecoup[i]} | Réponse : {listecoupreponse[i]}")
+        print()
 
     #Affichage des scores
     afficher_scores_final("devinette")
