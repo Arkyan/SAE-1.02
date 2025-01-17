@@ -27,13 +27,18 @@ def allumette():
     Retourne : None
     """
 
-    ResteAllumette : int
-    allumetteprise : int
-    joueur1 : str
-    joueur2 : str
-    joueur_actuel : str
+    ResteAllumette : int # Nombre d'allumettes restantes
+    allumetteprise : int # Nombre d'allumettes prises par le joueur
+    joueur1 : str # Nom du joueur 1
+    joueur2 : str # Nom du joueur 2
+    joueur_actuel : str # Nom du joueur qui doit jouer
+    
+    listecoupjoueur : list[str] # Liste des joueurs ayant joué
+    listecoupjoueur = []
+    listecoup : list[int] # Liste des coups joués
+    listecoup = [] 
 
-    ResteAllumette = 20
+    ResteAllumette = 20 # Initialisation du nombre d'allumettes
 
     # Proposition réinitialisation des scores
     reinitialiser_scores_binaire("allumette")
@@ -79,6 +84,7 @@ def allumette():
 
     #Mode IA contre IA
     elif mode_jeu == 3 :
+        # Liste des joueurs
         listej = listejoueur("allumette", mode_jeu)
 
         if j == 1 :
@@ -115,11 +121,17 @@ def allumette():
             # Demander combien d'allumettes prendre
             allumetteprise = int(inputCustom(f"\033[0;36m{joueur_actuel}\033[0m : Combien d'allumettes voulez-vous prendre ? ", int, "La valeur doit être un entier", 1, 3))
 
+            # Ajout des coups joués dans une liste
+            listecoupjoueur.append(joueur_actuel)
+            listecoup.append(allumetteprise)
+
             # Vérification que le joueur ne prend pas plus d'allumettes que celles restantes
             while allumetteprise > ResteAllumette:
                 affichage_Partie_Allumette(ResteAllumette, joueur_actuel)
                 print("Vous ne pouvez pas prendre plus d'allumettes qu'il n'en reste !")
                 allumetteprise = int(inputCustom(f"\033[0;36m{joueur_actuel}\033[0m : Combien d'allumettes voulez-vous prendre ? ", int, "La valeur doit être un entier", 1, 3))
+                listecoupjoueur.append(joueur_actuel)
+                listecoup.append(allumetteprise)
         
             # Vérifier si le joueur qui va jouer prend la dernière allumette
             if allumetteprise == ResteAllumette :  # Si le joueur prend toutes les allumettes restantes, il perd
@@ -151,9 +163,16 @@ def allumette():
             if joueur_actuel == "IA1" :
                 sleep(2)
                 allumetteprise = bot_allumette(difficulte, ResteAllumette)
+
+                listecoupjoueur.append(joueur_actuel)
+                listecoup.append(allumetteprise)
+
                 sleep(2)
             else :
                 allumetteprise = int(inputCustom(f"\033[0;36m{joueur_actuel}\033[0m : Combien d'allumettes voulez-vous prendre ? ", int, "La valeur doit être un entier", 1, 3))
+
+                listecoupjoueur.append(joueur_actuel)
+                listecoup.append(allumetteprise)
 
             # Vérification que le joueur ne prend pas plus d'allumettes que celles restantes
             while allumetteprise > ResteAllumette:
@@ -163,9 +182,14 @@ def allumette():
                 if joueur_actuel == "IA1" :
                     sleep(1)
                     allumetteprise = bot_allumette(difficulte, ResteAllumette)
+
+                    listecoupjoueur.append(joueur_actuel)
+                    listecoup.append(allumetteprise)
                     sleep(1)
                 else :
                     allumetteprise = int(inputCustom(f"\033[0;36m{joueur_actuel}\033[0m : Combien d'allumettes voulez-vous prendre ? ", int, "La valeur doit être un entier", 1, 3))
+                    listecoupjoueur.append(joueur_actuel)
+                    listecoup.append(allumetteprise)
 
             # Vérifier si le joueur qui va jouer prend la dernière allumette
             if allumetteprise == ResteAllumette :
@@ -196,6 +220,9 @@ def allumette():
 
             sleep(1)
             allumetteprise = bot_allumette(difficulte, ResteAllumette)
+
+            listecoupjoueur.append(joueur_actuel)
+            listecoup.append(allumetteprise)
             sleep(1)
 
             # Vérification que le joueur ne prend pas plus d'allumettes que celles restantes
@@ -204,6 +231,9 @@ def allumette():
                 print("Vous ne pouvez pas prendre plus d'allumettes qu'il n'en reste !")
                 sleep(1)
                 allumetteprise = bot_allumette(difficulte, ResteAllumette)
+
+                listecoupjoueur.append(joueur_actuel)
+                listecoup.append(allumetteprise)
                 sleep(1)
 
             # Vérifier si le joueur qui va jouer prend la dernière allumette
@@ -221,5 +251,18 @@ def allumette():
             else:
                 joueur_actuel = joueur1
 
+# ──────────────────────────────────────────────────────────────
+#                AFFICHAGE FINAL
+# ──────────────────────────────────────────────────────────────
+    # Affichage des coups joués
+    demande = str(inputCustom("Voulez-vous afficher les coups joués ? (Oui/Non) ", str, "La valeur doit être une chaîne de caractères")).capitalize()
+    if demande == "Oui" :
+        print()
+        print("────────────────────────────────────────────────")
+        for i in range(len(listecoupjoueur)) :
+            print(f"\033[0;36m{listecoupjoueur[i]}\033[0m a pris \033[92m{listecoup[i]}\033[0m allumettes")
+        print("────────────────────────────────────────────────")
+
+    # Affichage des scores
     afficher_scores_final("allumette")
     quitterjeux("allumette")

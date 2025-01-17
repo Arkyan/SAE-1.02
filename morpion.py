@@ -213,26 +213,26 @@ def deja_pris(mat : list[list[str]], l : int, c : int) -> bool :
 ############################################################################################################
     
 def morpionjouer() :
-    cond_vic1 : bool
-    cond_vic2 : bool
-    humain : bool
+    cond_vic1 : bool #Victoire du joueur 1
+    cond_vic2 : bool #Victoire du joueur 2
+    humain : bool #Joueur humain
     
     cond_vic1 = False
     cond_vic2 = False
-    compteur : int
-    compt_j : int
+    compteur : int 
+    compt_j : int   
     
-    mode_jeu : int 
-    difficulte : int
+    mode_jeu : int #Mode de jeu
+    difficulte : int #Difficulté de l'IA
     
-    n_ligne_col : int
-    n_ligne_col = 0
+    n_ligne_col : int #Numéro de la ligne ou de la colonne
+    n_ligne_col = 0 
     
     compteur = 0
     compt_j = 1
-    j : int
+    j : int #Joueur
     
-    listej : list[str]
+    listej : list[str] #Liste des joueurs
     listej = []
 
 
@@ -945,9 +945,7 @@ def morpionjouer() :
     elif cond_vic2 :
         print(f"{joueur2} a gagné")
     else :
-        print("Match nul")           
-    
-
+        print("Match nul")
 
 # ──────────────────────────────────────────────────────────────
 #                AFFICHAGE FINAL

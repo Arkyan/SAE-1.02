@@ -49,30 +49,31 @@ def devinette():
     """
 
     #Initialisation des variables
-    intervalle: int
-    nbrmystere: int
-    j: int
-    joueur1: str
-    joueur2: str
-    listej: list[str]
-    gagner: bool
+    intervalle: int #Intervalle de jeu
+    nbrmystere: int #Nombre mystère
+    j: int #Variable pour choisir le joueur
+    joueur1: str #Nom du joueur 1
+    joueur2: str #Nom du joueur 2
+    listej: list[str] #Liste des joueurs
+    gagner: bool #Variable pour savoir si le joueur a gagné
 
-    mode_jeu : int 
-    difficulte : int
+    mode_jeu : int  #Mode de jeu
+    difficulte : int #Difficulté
 
-    borne_min : int
-    borne_max : int
+    borne_min : int #Borne minimale
+    borne_max : int #Borne maximale
 
-    listecoup : List[int] 
-    listecoup = []
+    listecoup : List[int] #Liste des coups joués
+    listecoup = [] 
 
-    listecoupreponse : List[str]
+    listecoupreponse : List[str] #Liste des réponses
     listecoupreponse = []
 
-    gagner = False
-    Sicompteur : str
-    compteur : int
-    compteur_max : int
+    Sicompteur : str #Choix si présence d'un compteur
+    compteur : int #Compteur
+    compteur_max : int #Compteur maximum
+
+    gagner = False 
     compteur = 0
     compteur_max = 0
 
@@ -169,6 +170,7 @@ def devinette():
             effacer_console()
 
             # Le joueur 2 fait une supposition
+            print(f"RAPPEL : L'intervalle de jeu est de 1 à {intervalle}")
             nbrdevine = int(inputCustom(f"\033[0;36m{joueur2}\033[0m, quel est le nombre ? ", int, "La valeur doit être un entier", 1, intervalle))
             listecoup.append(nbrdevine)
             menu("devinette")
@@ -223,10 +225,12 @@ def devinette():
             effacer_console()
 
             # Le joueur 2 fait une supposition
-            print(f"L'intervalle de jeu est de 1 à {intervalle}")
+            print(f"RAPPEL : L'intervalle de jeu est de 1 à {intervalle}")
             print(f"TEMPORAIRE : Le nombre mystère est {nbrmystere}")
             nbrdevine = int(inputCustom(f"\033[0;36m{joueur2}\033[0m, quel est le nombre ? ", int, "La valeur doit être un entier", 1, intervalle))
+
             listecoup.append(nbrdevine)
+
             valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
 
             if valeur == 1:

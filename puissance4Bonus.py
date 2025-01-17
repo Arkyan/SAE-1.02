@@ -59,8 +59,6 @@ def occurencejouer(grille: list[list[str]], joueur: str, colonne: int) -> None:
         if grille[i][colonne] == " " and not case_placee:  # Si la case est vide et qu'un jeton n'a pas encore été placé
             grille[i][colonne] = joueur  # Place le jeton du joueur
             case_placee = True  # On marque qu'un jeton a été placé
-    
-    # La boucle se termine sans le besoin de `break`, car `case_placee` gère l'arrêt du placement.
 
 # ──────────────────────────────────────────────────────────────
 #                VÉRIFICATION DE LA VICTOIRE
@@ -139,6 +137,7 @@ def colonnes_possibles(grille: list[list[str]]) -> list[int]:
     """
     colonnes : list[int] 
     colonnes = []
+
     for colonne in range(7):
         if not colonne_pleine(grille, colonne):
             colonnes.append(colonne)
@@ -158,6 +157,18 @@ def puissance4() -> None:
         None : None
     """
 
+    grille : list[list[str]]  # Grille de jeu
+    victoire : bool  # Indique si une victoire a eu lieu
+    plein : bool  # Indique si la grille est pleine
+    mode_jeu : int  # Mode de jeu
+    difficulte : int  # Difficulté de l'IA
+    joueur1 : str  # Joueur 1
+    joueur2 : str  # Joueur 2
+    signe1 : str  # Signe du joueur 1
+    signe2 : str  # Signe du joueur 2
+    joueur_actuel : str  # Joueur actuel
+    signe_actuel : str  # Signe du joueur actuel
+
     grille = [[" " for _ in range(7)] for _ in range(6)]  # Grille de jeu
     victoire = False  # Indique si une victoire a eu lieu
     plein = False  # Indique si la grille est pleine
@@ -174,6 +185,7 @@ def puissance4() -> None:
         difficulte = choix_difficulte()
         while difficulte == 3 :
             print("La difficulté 3 n'est pas disponible pour le jeu puissance 4")
+            print("Veuillez sélectionner une autre difficulté")
             difficulte = choix_difficulte()
 
 
@@ -260,7 +272,7 @@ def puissance4() -> None:
             print(f"{joueur_actuel} ({signe_actuel}), c'est à vous de jouer !")  # Affiche le joueur actuel
             colonne = int(inputCustom(f"{joueur_actuel} ({signe_actuel}), choisissez une colonne entre 1 et 7 : ",int,"La valeur doit être un entier",1, 7)) - 1  # Demande au joueur de choisir une colonne
 
-            # Vérifie si la case est prise
+            # Vérifie si la colone est pleine
             while colonne_pleine(grille, colonne):
                 nombrelignehorizontale(1, 55)
                 print("La colonne est pleine. Veuillez en choisir une autre.")
@@ -285,9 +297,11 @@ def puissance4() -> None:
 
             # Change de joueur
             if joueur_actuel == joueur1:
-                joueur_actuel, signe_actuel = joueur2, signe2
+                joueur_actuel = joueur2
+                signe_actuel = signe2
             else:
-                joueur_actuel, signe_actuel = joueur1, signe1
+                joueur_actuel = joueur1
+                signe_actuel = signe1
 
 
 # ──────────────────────────────────────────────────────────────
@@ -340,9 +354,11 @@ def puissance4() -> None:
 
             # Change de joueur
             if joueur_actuel == joueur1:
-                joueur_actuel, signe_actuel = joueur2, signe2
+                joueur_actuel = joueur2
+                signe_actuel = signe2
             else:
-                joueur_actuel, signe_actuel = joueur1, signe1
+                joueur_actuel = joueur1
+                signe_actuel = signe1
 
             
 # ──────────────────────────────────────────────────────────────
@@ -380,9 +396,11 @@ def puissance4() -> None:
 
             # Change de joueur
             if joueur_actuel == joueur1:
-                joueur_actuel, signe_actuel = joueur2, signe2
+                joueur_actuel = joueur2
+                signe_actuel = signe2
             else:
-                joueur_actuel, signe_actuel = joueur1, signe1
+                joueur_actuel = joueur1
+                signe_actuel = signe1
 
 # ──────────────────────────────────────────────────────────────
 #                AFFICHAGE FINAL
