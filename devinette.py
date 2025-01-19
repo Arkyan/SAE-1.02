@@ -336,6 +336,7 @@ def devinette():
 
             # Le joueur 2 fait une supposition
             nbrdevine = bot_devinnette(difficulte, intervalle, valeur, nbrdevine, borne_min, borne_max)
+            
             sleep(1)
 
             listecoup.append(nbrdevine)
@@ -354,6 +355,7 @@ def devinette():
                 borne_max = min(borne_max, nbrdevine - 1)  # Mise à jour de la borne maximale
 
             sleep(1)
+
             # Si le nombre n'a pas été trouvé en compteur_max tours
             if Sicompteur == "Oui" :
                 compteur += 1
