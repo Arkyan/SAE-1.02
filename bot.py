@@ -104,7 +104,7 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
         print(f"Le nombre donné par l'IA est {valeur_renvoye} (intervalle: [{borne_min}, {borne_max}])")
         return valeur_renvoye
         
-def bot_reponse_intervalle_devinette(nbr_devine : int, nbr_reponse : int) -> int:
+def bot_reponse_devinette(nbr_devine : int, nbr_reponse : int) -> int:
     """
     Fonction pour la réponse du bot pour la devinette.
     Args:

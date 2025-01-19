@@ -231,7 +231,7 @@ def devinette():
 
             listecoup.append(nbrdevine)
 
-            valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
+            valeur = bot_reponse_devinette(nbrdevine, nbrmystere)
 
             if valeur == 1:
                 listecoupreponse.append("Plus grand")
@@ -340,7 +340,7 @@ def devinette():
 
             listecoup.append(nbrdevine)
 
-            valeur = bot_reponse_intervalle_devinette(nbrdevine, nbrmystere)
+            valeur = bot_reponse_devinette(nbrdevine, nbrmystere)
 
 
             # Le joueur 1 répond

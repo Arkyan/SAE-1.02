@@ -310,7 +310,7 @@ def listejoueur(jeux: str, mode_jeu : int) -> List[str]:
             joueurs.append(nom_normalise)
             compteur += 1
 
-        # Enregistrer les joueurs et leur score initial (0) dans le fichier
+        # Enregistrer le joueurs et son score initial (0) dans le fichier
         for joueur in joueurs:
             enregistrer_score_binaire(jeux, joueur, 0)
 
