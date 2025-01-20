@@ -541,7 +541,7 @@ def afficher_scores_total() -> None:
     """
 
     # Liste des jeux disponibles (noms des jeux pour lesquels il existe des fichiers binaires de scores)
-    jeux_disponibles = ['allumette', 'devinette', 'morpion', 'puissance4']
+    jeux_disponibles = ['devinette', 'allumette', 'morpion', 'puissance4']
 
     if not jeux_disponibles:
         print("Aucun jeu n'est disponible.")

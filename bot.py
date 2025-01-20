@@ -381,6 +381,7 @@ def check_victory(grille : list[list[str]], joueur : str) -> bool:
     """
     i : int
     j : int
+
     #Lignes
     for i in range(0, 3):
         if grille[i][0] == joueur and grille[i][1] == joueur and grille[i][2] == joueur:
@@ -394,6 +395,7 @@ def check_victory(grille : list[list[str]], joueur : str) -> bool:
         return True
     if grille[0][2] == joueur and grille[1][1] == joueur and grille[2][0] == joueur:
         return True
+    
     return False
 
 ############################################################################################################
