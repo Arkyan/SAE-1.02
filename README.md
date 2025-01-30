@@ -1,6 +1,7 @@
 # SAE 1.02 - Deuxième projet Python ![Python-logo-notext svg](https://github.com/user-attachments/assets/c4f910c7-451f-4521-9935-920d161edc9d)
 
 # 📖 Description rapide  
+Cette SAé repose sur la Ressource BUT1 R1.01 : Initiation au développement 
 Ce second projet python est donc la suite de la [SAE1.01](https://github.com/Arkyan/SAE-1.01) avec l'ajout de fonctionnalité en plus.  
 Il a aussi été réalisé avec l'aide d'[Alexandre Ducouret](https://github.com/LightNight6423).
 Il possède donc les mêmes principes de bases que son prédécesseur.
