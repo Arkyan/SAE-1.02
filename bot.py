@@ -51,7 +51,7 @@ def bot_devinnette(difficulte: int, intervalle: int, retour_jeu: int, nbr_prec: 
     """
     Fonction pour le bot pour la devinette.
     Args:
-        difficulte (int): La difficulté du bot.
+        difficulte (int) : La difficulté du bot.
         intervalle (int): L'intervalle initial de jeu.
         retour_jeu (int): Le retour du jeu (0 : plus grand, 1 : plus petit).
         nbr_prec (int): Le dernier nombre proposé par le bot.
